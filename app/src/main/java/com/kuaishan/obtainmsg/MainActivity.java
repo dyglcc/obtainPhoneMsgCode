@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         Utils.requestPermission(this, Permission.SEND_SMS, Permission.READ_SMS,
-                Permission.RECEIVE_SMS);
+                Permission.RECEIVE_SMS,Permission.READ_PHONE_STATE,Permission.WRITE_EXTERNAL_STORAGE);
         mObserver = new SmsObserver(MainActivity.this, new MsgHandler());
         Uri uri = Uri.parse("content://sms");
         getContentResolver().registerContentObserver(uri, true, mObserver);

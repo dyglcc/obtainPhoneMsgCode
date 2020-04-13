@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kuaishan.obtainmsg">
-
+    <!-- 可选权限说明-->
+    <uses-permission
+        android:name="android.permission.INTERNET" />
+<!--    允许应用程序联网（必须）-->
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE" />
+<!--    允许访问WiFi网络状态信息（必须）-->
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE" />
+<!--    允许读取手机状态（必须）-->
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!--    允许访问网络状态（必须）-->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<!--    允许写手机存储（必须-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

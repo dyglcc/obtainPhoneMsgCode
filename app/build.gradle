@@ -1,12 +1,26 @@
 apply plugin: 'com.android.application'
+// 添加插件
+apply plugin: 'com.mob.sdk'
 
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "2ec9ca0c20b56"
+    appSecret "3fb6836eee60d6c4b69e7dbf49dfdf42"
+    SMSSDK {
+        autoSMS true
+    }
+    permissions {
+        exclude "android.permission.READ_CONTACTS"
+
+    }
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
         applicationId "com.kuaishan.obtainmsg"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"

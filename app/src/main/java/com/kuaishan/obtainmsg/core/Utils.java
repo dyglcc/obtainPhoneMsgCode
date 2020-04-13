@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.RuntimeRationale;
+import com.mob.MobSDK;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -35,11 +36,13 @@ public class Utils {
                     @Override
                     public void onAction(List<String> permissions) {
                         Utils.toast(context, R.string.successfully);
+                        MobSDK.submitPolicyGrantResult(true, null);
                     }
                 })
                 .onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
+                        MobSDK.submitPolicyGrantResult(false, null);
                         Utils.toast(context,R.string.failure);
                         if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
                             showSettingDialog(context, permissions);
