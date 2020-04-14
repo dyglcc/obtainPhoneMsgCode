@@ -43,7 +43,7 @@ public class RegisterActivity extends Activity {
                 reg();
             }
         });
-        buttonReg.setOnClickListener(new View.OnClickListener() {
+        buttonVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendCode(RegisterActivity.this);
@@ -75,8 +75,6 @@ public class RegisterActivity extends Activity {
 //        String firstName, String email, String lastName, String password, String mobile
         final HashMap map = new HashMap();
         map.put("firstName", verfyedPhone);
-        map.put("email", verfyedPhone);
-        map.put("lastName", verfyedPhone);
         map.put("password", pass_1);
         map.put("mobile", verfyedPhone);
         showLoadingDialog("发送数据中..");
@@ -86,7 +84,7 @@ public class RegisterActivity extends Activity {
                 public void run() {
                     String str = NetWorkUtils.sendMessge(Constants.Url.REGISTER, map);
                     if (!TextUtils.isEmpty(str)) {
-                        if(str.contains("oksdfs")){
+                        if(str.contains("ok")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

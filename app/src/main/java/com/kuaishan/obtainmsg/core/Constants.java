@@ -9,6 +9,8 @@ public class Constants {
         public static final String mServer = BuildConfig.WebsocketServer;
         //--------------------------------------------------------------------------------------获取试验最新更新接口
         public static final String REGISTER = BuildConfig.FlagServer + "api/v1/regist";
+        public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";
+        public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addrelation";
         //--------------------------------------------------------------------------------------变量服务器地址
         public static final String ADHOC_SERVER_GETFLAGS = BuildConfig.FlagServer +
                 "get_flags_async";

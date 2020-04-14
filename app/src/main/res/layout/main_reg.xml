@@ -8,7 +8,7 @@
         android:id="@+id/line_reg_phone"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +36,6 @@
             android:id="@+id/btn_reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注册"></Button>
+            android:text="注册"></Button>todo,测试注册，测试login，测试关联帐号，然后监听并上报数据，拉取数据。
     </LinearLayout>
 </LinearLayout>
