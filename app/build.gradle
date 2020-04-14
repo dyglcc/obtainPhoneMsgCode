@@ -1,7 +1,14 @@
 apply plugin: 'com.android.application'
 // 添加插件
 apply plugin: 'com.mob.sdk'
-
+def sdk_config = rootProject.ext.sdk_config
+def sdk_version_code = sdk_config.version_code
+def android_config = rootProject.ext.android
+def debugServer = rootProject.ext.debugServer
+def releaseServer = rootProject.ext.releaseServer
+def field = rootProject.ext.field
+String reportSensitiveData = rootProject.sdk_config.reportSensitiveData
+def varName = rootProject.ext.final_name
 // 在MobSDK的扩展中注册SMSSDK的相关信息
 MobSDK {
     appKey "2ec9ca0c20b56"
@@ -29,10 +36,39 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        buildTypes {
+            debug {
+                buildConfigField "double", field.SdkVersionCode, sdk_version_code
+                buildConfigField "boolean", field.LOG, "true"
+                buildConfigField "String", field.FlagServer, debugServer.server
+                buildConfigField "String", field.TrackServer, debugServer.track
+                buildConfigField "String", field.WebsocketServer, debugServer.websocket
+                buildConfigField "String", field.QiNiuServer, debugServer.qi_niu
+
+                versionNameSuffix "-debug"
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            }
+
+            release {
+                buildConfigField "double", field.SdkVersionCode, sdk_version_code
+                buildConfigField "boolean", field.LOG, "false"
+                buildConfigField "String", field.FlagServer, releaseServer.server
+                buildConfigField "String", field.TrackServer, releaseServer.track
+                buildConfigField "String", field.WebsocketServer, releaseServer.websocket
+                buildConfigField "String", field.QiNiuServer, releaseServer.qi_niu
+
+                minifyEnabled true
+//            shrinkResources true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            }
+
         }
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
     }
 
 }

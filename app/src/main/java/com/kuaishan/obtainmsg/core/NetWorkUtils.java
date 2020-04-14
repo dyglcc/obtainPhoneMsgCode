@@ -15,7 +15,7 @@ import okhttp3.Response;
 
 public class NetWorkUtils {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void sendMessge(String url, Map<String, String> map) {
+    public static String  sendMessge(String url, Map<String, String> map) {
         if (!TextUtils.isEmpty(url)) {
             OkHttpClient client = new OkHttpClient();
             FormBody.Builder builder = new FormBody.Builder();
@@ -29,10 +29,11 @@ public class NetWorkUtils {
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .build();
             try (Response response = client.newCall(request).execute()) {
-                response.body().string();
+                return response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 }
