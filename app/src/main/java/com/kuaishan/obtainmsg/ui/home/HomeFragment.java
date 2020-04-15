@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kuaishan.obtainmsg.R;
@@ -18,6 +19,7 @@ import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
+import com.kuaishan.obtainmsg.ui.adapter.RelationAdapter;
 
 import java.util.HashMap;
 
@@ -32,6 +34,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private EditText editGualian,et_name;
     private Button btnGl;
+    private ListView list;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +64,8 @@ public class HomeFragment extends Fragment {
                 addRelation();
             }
         });
-
+        list = root.findViewById(R.id.list);
+        RelationAdapter adapter = new RelationAdapter(getActivity(),data);
         return root;
     }
 

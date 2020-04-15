@@ -2,7 +2,6 @@ package com.kuaishan.obtainmsg.account;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,21 +18,24 @@ import com.kuaishan.obtainmsg.core.Utils;
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
+
+import static com.kuaishan.obtainmsg.ui.home.HomeFragment.getPhone;
 
 public class RegisterActivity extends Activity {
 
-    private Button buttonReg, buttonVerify;
-    private EditText pass1, pass2;
+    private Button buttonReg;
+    private EditText pass1, pass2,et_phone,et_name;
+    private String mobile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_reg);
         buttonReg = findViewById(R.id.btn_reg);
-        buttonVerify = findViewById(R.id.btn_very);
+        mobile = getPhone(this);
+        et_phone = findViewById(R.id.et_phone);
+        et_name = findViewById(R.id.et_name);
+        et_phone.setText(mobile);
         pass1 = findViewById(R.id.et_pass1);
         pass2 = findViewById(R.id.et_pass2);
 
@@ -43,22 +45,13 @@ public class RegisterActivity extends Activity {
                 reg();
             }
         });
-        buttonVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendCode(RegisterActivity.this);
-            }
-        });
 
     }
 
     private void reg() {
-        if (verfyedPhone == null) {
-            Utils.toast(RegisterActivity.this, "手机号未通过验证");
-            return;
-        }
         String pass_1 = pass1.getText().toString();
         String pass_2 = pass2.getText().toString();
+        String name = et_name.getText().toString();
 
         if (TextUtils.isEmpty(pass_1)) {
             Utils.toast(RegisterActivity.this, "请输入密码");
@@ -74,9 +67,9 @@ public class RegisterActivity extends Activity {
         }
 //        String firstName, String email, String lastName, String password, String mobile
         final HashMap map = new HashMap();
-        map.put("firstName", verfyedPhone);
+        map.put("firstName", name);
         map.put("password", pass_1);
-        map.put("mobile", verfyedPhone);
+        map.put("mobile", mobile);
         showLoadingDialog("发送数据中..");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
@@ -90,6 +83,7 @@ public class RegisterActivity extends Activity {
                                 public void run() {
                                     dismiss();
                                     Utils.toast(RegisterActivity.this,"注册成功，请登录");
+                                    finish();
                                 }
                             });
                         }
@@ -119,27 +113,4 @@ public class RegisterActivity extends Activity {
         }
     }
 
-    private String verfyedPhone = null;
-
-    public void sendCode(Context context) {
-        RegisterPage page = new RegisterPage();
-        //如果使用我们的ui，没有申请模板编号的情况下需传null
-        page.setTempCode(null);
-        page.setRegisterCallback(new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    // 处理成功的结果
-                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                    // 国家代码，如“86”
-                    String country = (String) phoneMap.get("country");
-                    // 手机号码，如“13800138000”
-                    verfyedPhone = (String) phoneMap.get("phone");
-                    // TODO 利用国家代码和手机号码进行后续的操作
-                } else {
-                    // TODO 处理错误的结果
-                }
-            }
-        });
-        page.show(context);
-    }
 }

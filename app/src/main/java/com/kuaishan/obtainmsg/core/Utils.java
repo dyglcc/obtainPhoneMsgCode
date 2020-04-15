@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.core;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -20,17 +21,29 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
 public class Utils {
-    public static void toast(Context context, @StringRes int message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    public static void toast(final Context context, @StringRes final int message) {
+        new Handler(context.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    public static void toast(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+    public static void toast(final Context context, final String message) {
+        new Handler(context.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
      * Request permissions.
      */
-    public static void requestPermission(final Context context, @PermissionDef String... permissions) {
+    public static void requestPermission(final Context context,
+                                         @PermissionDef String... permissions) {
         AndPermission.with(context)
                 .runtime()
                 .permission(permissions)
@@ -46,7 +59,7 @@ public class Utils {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
                         MobSDK.submitPolicyGrantResult(false, null);
-                        Utils.toast(context,R.string.failure);
+                        Utils.toast(context, R.string.failure);
                         if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
                             showSettingDialog(context, permissions);
                         }
@@ -79,7 +92,9 @@ public class Utils {
                 })
                 .show();
     }
+
     private static final int REQUEST_CODE_SETTING = 1;
+
     /**
      * Set permissions.
      */

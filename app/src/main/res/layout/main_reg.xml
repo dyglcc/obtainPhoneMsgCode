@@ -10,26 +10,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <EditText
+            android:id="@+id/et_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="请输入手机号"></EditText>
+            android:inputType="none"></EditText>
 
-        <Button
-            android:id="@+id/btn_very"
+<!--        <Button-->
+<!--            android:id="@+id/btn_very"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="验证手机号"></Button>-->
+        <EditText
+            android:id="@+id/et_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="验证手机号"></Button>
-
+            android:hint="给自己起个名儿"
+            android:layout_height="wrap_content">
+        </EditText>
         <EditText
             android:id="@+id/et_pass1"
+            android:inputType="textPassword"
             android:layout_width="wrap_content"
             android:hint="请输入密码"
             android:layout_height="wrap_content">
         </EditText>
+
         <EditText
             android:id="@+id/et_pass2"
             android:layout_width="wrap_content"
             android:hint="请确认密码"
+            android:inputType="textPassword"
             android:layout_height="wrap_content">
         </EditText>
         <Button

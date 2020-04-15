@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.account;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -11,15 +12,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kuaishan.obtainmsg.MainActivity;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 
 import static com.kuaishan.obtainmsg.ui.home.HomeFragment.getPhone;
 
@@ -40,15 +48,13 @@ public class LoginActivity extends Activity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
                 login();
             }
         });
         findViewById(R.id.btn_reg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                sendCode(LoginActivity.this);
             }
         });
 
@@ -76,15 +82,26 @@ public class LoginActivity extends Activity {
                 @Override
                 public void run() {
                     final String str = NetWorkUtils.sendMessge(Constants.Url.LOGIN, map);
+                    dismiss();
                     if (!TextUtils.isEmpty(str)) {
                         if(str.contains("ok")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    dismiss();
                                     savePhone(etPhone);
+                                    Utils.toast(LoginActivity.this,"登录成功");
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 }
                             });
+                        }else{
+                            try {
+                                JSONObject object = new JSONObject(str);
+                                String msg = object.optString("message");
+                                Utils.toast(LoginActivity.this,"貌似有问题出现:" + msg);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
                 }
@@ -116,5 +133,32 @@ public class LoginActivity extends Activity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("mobile",mobile);
         editor.apply();
+    }
+
+
+    private String verfyedPhone = null;
+
+    public void sendCode(Context context) {
+        RegisterPage page = new RegisterPage();
+        //如果使用我们的ui，没有申请模板编号的情况下需传null
+        page.setTempCode(null);
+        page.setRegisterCallback(new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 处理成功的结果
+                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                    // 国家代码，如“86”
+                    String country = (String) phoneMap.get("country");
+                    // 手机号码，如“13800138000”
+                    verfyedPhone = (String) phoneMap.get("phone");
+                    savePhone(verfyedPhone);
+                    startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                    // TODO 利用国家代码和手机号码进行后续的操作
+                } else {
+                    // TODO 处理错误的结果
+                }
+            }
+        });
+        page.show(context);
     }
 }
