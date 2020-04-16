@@ -21,7 +21,11 @@ import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.adapter.RelationAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,10 +69,46 @@ public class HomeFragment extends Fragment {
             }
         });
         list = root.findViewById(R.id.list);
-        RelationAdapter adapter = new RelationAdapter(getActivity(),data);
+         adapter= new RelationAdapter(null,getActivity());
+        list.setAdapter(adapter);
+        requestRelations();
         return root;
     }
 
+    private void requestRelations() {
+        final HashMap map = new HashMap();
+        map.put("mobile",getPhone(getActivity()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            AdhocExecutorService.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    String str = NetWorkUtils.sendMessge(Constants.Url.GETRELATION, map);
+                    if (!TextUtils.isEmpty(str)) {
+                        if(str.contains("ok")){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try{
+                                        JSONObject jsonObject = new JSONObject();
+                                        JSONArray array = jsonObject.optJSONArray("data");
+                                        // need gson;
+                                        refreshData();
+                                    }catch (Throwable throwable){
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private RelationAdapter adapter;
+    private void refreshData(List data){
+            adapter.setData(data);
+    }
     private void addRelation() {
         String etPhone = editGualian.getText().toString();
         String etName = et_name.getText().toString();
