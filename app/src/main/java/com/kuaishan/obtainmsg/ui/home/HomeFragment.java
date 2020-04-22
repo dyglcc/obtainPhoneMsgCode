@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.ui.home;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,19 +10,24 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.kuaishan.obtainmsg.MainActivity;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.adapter.RelationAdapter;
+import com.kuaishan.obtainmsg.ui.bean.Relation;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -37,7 +43,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private EditText editGualian,et_name;
-    private Button btnGl;
+    private Button btnGl,logout;
     private ListView list;
 
 
@@ -50,6 +56,7 @@ public class HomeFragment extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.MsgHandler.sendSMSS("13810580894","都几点了，还不回家？",getActivity());
             }
         });
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -59,6 +66,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        logout = root.findViewById(R.id.btn_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.logOut(getActivity());
+            }
+        });
         editGualian = root.findViewById(R.id.et_guanlian);
         et_name = root.findViewById(R.id.et_name);
         btnGl = root.findViewById(R.id.btn_guanlian);
@@ -71,8 +85,22 @@ public class HomeFragment extends Fragment {
         list = root.findViewById(R.id.list);
          adapter= new RelationAdapter(null,getActivity());
         list.setAdapter(adapter);
-        requestRelations();
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Relation relation = (Relation) adapter.getItem(position);
+                Intent intent = new Intent(getActivity(), MessagesActivity.class);
+                intent.putExtra("mobile",relation.getRelate_phone());
+                startActivity(intent);
+            }
+        });
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requestRelations();
     }
 
     private void requestRelations() {
@@ -82,18 +110,22 @@ public class HomeFragment extends Fragment {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
-                    String str = NetWorkUtils.sendMessge(Constants.Url.GETRELATION, map);
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.GETRELATION, map);
                     if (!TextUtils.isEmpty(str)) {
                         if(str.contains("ok")){
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try{
-                                        JSONObject jsonObject = new JSONObject();
-                                        JSONArray array = jsonObject.optJSONArray("data");
+                                        JSONObject jsonObject = new JSONObject(str);
+                                        JSONObject dataObj = jsonObject.optJSONObject("data");
+                                        Gson gson = new Gson();
+                                        List datas = gson.fromJson(dataObj.optJSONArray("data").toString(),
+                                                new TypeToken<List<Relation>>(){}.getType());
                                         // need gson;
-                                        refreshData();
+                                        refreshData(datas);
                                     }catch (Throwable throwable){
+                                        throwable.printStackTrace();
                                     }
 
                                 }
@@ -126,7 +158,7 @@ public class HomeFragment extends Fragment {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
-                    String str = NetWorkUtils.sendMessge(Constants.Url.ADDRELATION, map);
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.ADDRELATION, map);
                     if (!TextUtils.isEmpty(str)) {
                         if(str.contains("ok")){
                             getActivity().runOnUiThread(new Runnable() {
@@ -134,6 +166,18 @@ public class HomeFragment extends Fragment {
                                 public void run() {
                                     dismiss();
                                     Utils.toast(getActivity(),"添加关联帐号成功");
+                                    try{
+                                        JSONObject jsonObject = new JSONObject(str);
+                                        JSONObject dataObj = jsonObject.optJSONObject("data");
+                                        Gson gson = new Gson();
+                                        List datas = gson.fromJson(dataObj.optJSONArray("data").toString(),
+                                                new TypeToken<List<Relation>>(){}.getType());
+                                        // need gson;
+                                        refreshData(datas);
+                                    }catch (Throwable throwable){
+                                        throwable.printStackTrace();
+                                    }
+
                                 }
                             });
                         }
@@ -143,7 +187,7 @@ public class HomeFragment extends Fragment {
         }
     }
     public static String getPhone(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("kuaishan",0);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.COMMON.SHARE_NAME,0);
         return sharedPreferences.getString("mobile","");
     }
 

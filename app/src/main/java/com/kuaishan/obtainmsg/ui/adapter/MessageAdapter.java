@@ -8,19 +8,25 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.kuaishan.obtainmsg.R;
-import com.kuaishan.obtainmsg.ui.bean.Relation;
+import com.kuaishan.obtainmsg.ui.bean.SubTicket;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class RelationAdapter extends BaseAdapter {
-    private List<Relation> data;
+public class MessageAdapter extends BaseAdapter {
+    private List<SubTicket> data;
     private Context context;
+//    ("yyyy-MM-dd/HH:mm:ss")
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+//    private DateFormat format = SimpleDateFormat.getDateTimeInstance();
 
-    public RelationAdapter(List<Relation> data, Context context) {
+    public MessageAdapter(List<SubTicket> data, Context context) {
         this.data = data;
         this.context = context;
     }
 
-    public void setData(List<Relation> data){
+    public void setData(List<SubTicket> data){
         this.data = data;
         this.notifyDataSetChanged();
     }
@@ -41,7 +47,7 @@ public class RelationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Relation relation = data.get(position);
+        SubTicket subticket = data.get(position);
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_relation, null);
@@ -52,8 +58,8 @@ public class RelationAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tv_name.setText(relation.getName());
-        holder.tv_mobile.setText(relation.getRelate_phone());
+        holder.tv_name.setText(format.format(new Date(subticket.getCreated_at())));
+        holder.tv_mobile.setText(subticket.getMessage());
         return convertView;
     }
 

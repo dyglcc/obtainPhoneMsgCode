@@ -1,7 +1,5 @@
 package com.kuaishan.obtainmsg.ui.bean;
 
-import java.util.Date;
-
 /**
  * /**
  * `id`           INT         NOT NULL AUTO_INCREMENT,
@@ -41,8 +39,25 @@ public class Relation {
 
     private String user_phone;
     private String relate_phone;
-    private Date updated_at;
-    private Date created_at;
+
+    public long getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(long updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public long getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(long created_at) {
+        this.created_at = created_at;
+    }
+
+    private long updated_at;
+    private long created_at;
 
 
     public int getId() {
@@ -53,20 +68,4 @@ public class Relation {
         this.id = id;
     }
 
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
 }

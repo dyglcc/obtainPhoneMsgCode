@@ -33,6 +33,24 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "3c1bafd2c4145faeaa7da1bb", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+    }
+
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
     }
 
     buildTypes {
@@ -76,6 +94,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation(project(':library'))
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -88,4 +107,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.yanzhenjie:permission:2.0.3'
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+
+    implementation 'cn.jiguang.sdk:jpush:3.6.0'  // 此处以JPush 3.6.0 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.3.4'  // 此处以JCore 2.3.4 版本为例。
+    implementation 'com.github.bumptech.glide:glide:3.6.1'
 }

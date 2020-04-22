@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
+import cn.jpush.android.api.JPushInterface;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
@@ -33,7 +34,12 @@ import static com.kuaishan.obtainmsg.ui.home.HomeFragment.getPhone;
 
 public class LoginActivity extends Activity {
     private Button buttonLogin;
-    private EditText et_phone,et_pass;
+    private EditText et_phone, et_pass;
+
+    public static void start(Activity context) {
+        context.startActivity(new Intent(context,LoginActivity.class));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +47,15 @@ public class LoginActivity extends Activity {
         buttonLogin = findViewById(R.id.btn_login);
         et_phone = findViewById(R.id.et_phone);
         et_pass = findViewById(R.id.et_pass);
+
+        long timeToke = getTimeToken(this);
+        if ((System.currentTimeMillis() - timeToke) < Constants.COMMON.TENDAYS) {
+            goMain();
+            return;
+        }
+
         String phone = getPhone(this);
-        if(!TextUtils.isEmpty(phone)){
+        if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone);
         }
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -84,20 +97,22 @@ public class LoginActivity extends Activity {
                     final String str = NetWorkUtils.sendMessge(Constants.Url.LOGIN, map);
                     dismiss();
                     if (!TextUtils.isEmpty(str)) {
-                        if(str.contains("ok")){
+                        if (str.contains("ok")) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     savePhone(etPhone);
-                                    Utils.toast(LoginActivity.this,"登录成功");
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    JPushInterface.setAlias(LoginActivity.this,0,etPhone);
+                                    saveTimeToken();
+                                    Utils.toast(LoginActivity.this, "登录成功");
+                                    goMain();
                                 }
                             });
-                        }else{
+                        } else {
                             try {
                                 JSONObject object = new JSONObject(str);
                                 String msg = object.optString("message");
-                                Utils.toast(LoginActivity.this,"貌似有问题出现:" + msg);
+                                Utils.toast(LoginActivity.this, "貌似有问题出现:" + msg);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -109,15 +124,33 @@ public class LoginActivity extends Activity {
         }
 
     }
+
+    private void goMain() {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+    }
+
+    public static long getTimeToken(Context context) {
+        return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getLong(Constants.COMMON.TIME_TOKEN, 0);
+    }
+
+    private void saveTimeToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(Constants.COMMON.TIME_TOKEN, System.currentTimeMillis());
+        editor.apply();
+    }
+
     private ProgressDialog mProgressDialog;
 
-    private void dismiss(){
+    private void dismiss() {
         if (!isFinishing()) {
-            if(mProgressDialog !=null && mProgressDialog.isShowing()){
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
         }
     }
+
     public void showLoadingDialog(String message) {
         if (!isFinishing()) {
             if (mProgressDialog == null) {
@@ -128,10 +161,10 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private void savePhone(String mobile){
-        SharedPreferences sharedPreferences = getSharedPreferences("kuaishan",0);
+    private void savePhone(String mobile) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("mobile",mobile);
+        editor.putString("mobile", mobile);
         editor.apply();
     }
 
@@ -152,7 +185,7 @@ public class LoginActivity extends Activity {
                     // 手机号码，如“13800138000”
                     verfyedPhone = (String) phoneMap.get("phone");
                     savePhone(verfyedPhone);
-                    startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                     // TODO 利用国家代码和手机号码进行后续的操作
                 } else {
                     // TODO 处理错误的结果
@@ -160,5 +193,17 @@ public class LoginActivity extends Activity {
             }
         });
         page.show(context);
+    }
+
+    public static void logOut(Context context){
+        if(context == null){
+            return;
+        }
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.COMMON.SHARE_NAME,0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(Constants.COMMON.TIME_TOKEN,0);
+        editor.putString(Constants.COMMON.ALIAS,"");
+        editor.apply();
     }
 }

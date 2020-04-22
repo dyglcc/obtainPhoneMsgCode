@@ -3,6 +3,13 @@ package com.kuaishan.obtainmsg.core;
 import com.kuaishan.obtainmsg.BuildConfig;
 
 public class Constants {
+
+    public static class COMMON {
+        public static final String SHARE_NAME = "kuaishan";
+        public static final long TENDAYS = 10 * 24 * 3600 * 1000;
+        public static String TIME_TOKEN = "time_token";
+        public static String ALIAS = "alias";
+    }
     public static class Url {
         //-----------------------------------I
         // ---------------------------------------------------websocket
@@ -12,6 +19,8 @@ public class Constants {
         public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";
         public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addrelation";
         public static final String GETRELATION = BuildConfig.FlagServer + "api/v1/relations";
+        public static final String SAVESMS = BuildConfig.FlagServer + "api/v1/submitticket";
+        public static final String MESSAGES = BuildConfig.FlagServer + "api/v1/messages";
         //--------------------------------------------------------------------------------------变量服务器地址
         public static final String ADHOC_SERVER_GETFLAGS = BuildConfig.FlagServer +
                 "get_flags_async";
