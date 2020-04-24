@@ -51,7 +51,7 @@ public class Utils {
                 .onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> permissions) {
-                        Utils.toast(context, R.string.successfully);
+                        T.i(context.getString(R.string.successfully));
                         MobSDK.submitPolicyGrantResult(true, null);
                     }
                 })

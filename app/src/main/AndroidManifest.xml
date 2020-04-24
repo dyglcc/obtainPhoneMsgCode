@@ -61,7 +61,7 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="${applicationId}" />
+                <category android:name="com.kuaishan.obtainmsg" />
             </intent-filter>
         </receiver>
     </application>

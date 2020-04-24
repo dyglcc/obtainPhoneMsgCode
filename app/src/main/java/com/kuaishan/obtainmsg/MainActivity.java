@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!map.containsKey(leaderMobile)) {
                             map.put(leaderMobile, true);
                             if(activity!=null && activity.get()!=null){
-                                sendSMSS(leaderMobile, code,activity.get());
+//                                sendSMSS(leaderMobile, code,activity.get());
                                 saveMesage2Server(activity.get(),code);
                             }else {
                                 T.i("activity is null, null");
