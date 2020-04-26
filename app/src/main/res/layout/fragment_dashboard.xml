@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
 
@@ -10,13 +10,43 @@
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="20sp" />
+
+    <Button
+        android:text="logout"
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_logout"
+        android:textSize="30dp"
+        android:textColor="#ffff00"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="登录和注册"
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_login"
+        android:textSize="30dp"
+        android:textColor="#ffff00"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="联系我们"
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_contract"
+        android:textSize="30dp"
+        android:textColor="#ffff00"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="关于我们"
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_about"
+        android:textSize="30dp"
+        android:textColor="#ffff00"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="隐私条款"
+        android:layout_width="wrap_content"
+        android:id="@+id/btn_privacy"
+        android:textSize="30dp"
+        android:textColor="#ffff00"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

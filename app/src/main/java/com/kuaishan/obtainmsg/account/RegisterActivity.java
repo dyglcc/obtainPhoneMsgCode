@@ -19,8 +19,6 @@ import java.util.HashMap;
 
 import androidx.annotation.Nullable;
 
-import static com.kuaishan.obtainmsg.ui.home.HomeFragment.getPhone;
-
 public class RegisterActivity extends Activity {
 
     private Button buttonReg;
@@ -32,7 +30,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_reg);
         buttonReg = findViewById(R.id.btn_reg);
-        mobile = getPhone(this);
+        mobile = Utils.getPhone(this);
         et_phone = findViewById(R.id.et_phone);
         et_name = findViewById(R.id.et_name);
         et_phone.setText(mobile);

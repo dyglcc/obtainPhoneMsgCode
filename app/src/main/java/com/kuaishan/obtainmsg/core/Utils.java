@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.core;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -100,5 +101,12 @@ public class Utils {
      */
     private static void setPermission(Context context) {
         AndPermission.with(context).runtime().setting().start(REQUEST_CODE_SETTING);
+    }
+
+
+    public static String getPhone(Context context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
+        return sharedPreferences.getString("mobile", "");
     }
 }

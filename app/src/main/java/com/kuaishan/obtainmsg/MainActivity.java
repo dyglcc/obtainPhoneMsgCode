@@ -1,7 +1,12 @@
 package com.kuaishan.obtainmsg;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +27,6 @@ import com.kuaishan.obtainmsg.core.SmsObserver;
 import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.bean.Relation;
-import com.kuaishan.obtainmsg.ui.home.HomeFragment;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONObject;
@@ -33,17 +37,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static boolean isForeground = false;
     public static final int MSG_RECEIVED_CODE = 1;
     private SmsObserver mObserver;
     static List datas;
 
+    // jpush
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,27 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse("content://sms");
         getContentResolver().registerContentObserver(uri, true, mObserver);
         requestLeaders();
+
+        // jpush regiser
+        registerMessageReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isForeground = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isForeground = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
     private void goLoginActivity() {
@@ -77,9 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static class MsgHandler extends Handler {
         private WeakReference<Activity> activity;
-        public MsgHandler(Activity activity){
+
+        public MsgHandler(Activity activity) {
             this.activity = new WeakReference<>(activity);
         }
+
         @Override
         public void handleMessage(Message msg) {
 
@@ -93,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
                         String leaderMobile = relation.getUser_phone();
                         if (!map.containsKey(leaderMobile)) {
                             map.put(leaderMobile, true);
-                            if(activity!=null && activity.get()!=null){
+                            if (activity != null && activity.get() != null) {
 //                                sendSMSS(leaderMobile, code,activity.get());
-                                saveMesage2Server(activity.get(),code);
-                            }else {
+                                saveMesage2Server(activity.get(), code);
+                            } else {
                                 T.i("activity is null, null");
                             }
                         }
@@ -130,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestLeaders() {
         final HashMap map = new HashMap();
-        map.put("mobile", HomeFragment.getPhone(this));
+        map.put("mobile", Utils.getPhone(this));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
@@ -161,10 +190,11 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
     private static void saveMesage2Server(final Activity context, String content) {
         final HashMap map = new HashMap();
-        map.put("mobile", HomeFragment.getPhone(context));
-        map.put("message",content);
+        map.put("mobile", Utils.getPhone(context));
+        map.put("message", content);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
@@ -176,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     try {
-                                        Utils.toast(context,str);
+                                        Utils.toast(context, str);
                                         // need gson;
                                     } catch (Throwable throwable) {
                                         throwable.printStackTrace();
@@ -188,6 +218,58 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+    }
+
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.kuaishan.obtainmsg.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver(this);
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+    }
+
+    public static class MessageReceiver extends BroadcastReceiver {
+
+        private WeakReference<Activity> context;
+        public MessageReceiver(Activity activity){
+            context = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                    String messge = intent.getStringExtra(KEY_MESSAGE);
+                    String extras = intent.getStringExtra(KEY_EXTRAS);
+                    StringBuilder showMsg = new StringBuilder();
+                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    if (!TextUtils.isEmpty(extras)) {
+                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                    }
+                    setCostomMsg(showMsg.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void setCostomMsg(String toString) {
+            if (MainActivity.isForeground) {
+                if(context!=null && context.get()!=null){
+                    Dialog dialog =
+                            new AlertDialog.Builder(context.get()).setMessage(toString).create();
+                    dialog.show();
+                    dialog.setCanceledOnTouchOutside(true);
+                }
+
+            }
         }
     }
 }

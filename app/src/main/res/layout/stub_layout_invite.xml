@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_invite_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="邀请亲人分享会员帐号"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:drawableLeft="@drawable/add"
+        android:text="微信邀请"
+        android:id="@+id/btn_invite"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

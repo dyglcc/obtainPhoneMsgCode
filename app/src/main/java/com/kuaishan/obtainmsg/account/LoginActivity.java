@@ -34,7 +34,6 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
 
-import static com.kuaishan.obtainmsg.ui.home.HomeFragment.getPhone;
 
 public class LoginActivity extends Activity {
     private Button buttonLogin;
@@ -58,7 +57,7 @@ public class LoginActivity extends Activity {
             return;
         }
 
-        String phone = getPhone(this);
+        String phone = Utils.getPhone(this);
         if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone);
         }

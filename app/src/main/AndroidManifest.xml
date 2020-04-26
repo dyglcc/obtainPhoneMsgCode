@@ -39,6 +39,7 @@
         <activity android:name=".account.LoginActivity"></activity>
         <activity android:name=".account.RegisterActivity"></activity>
         <activity android:name=".ui.home.MessagesActivity"></activity>
+        <activity android:name=".RelationCreateActivity"></activity>
 
 <!--        <receiver android:name="com.kuaishan.obtainmsg.core.SmsReciver" >-->
 <!--            <intent-filter android:priority="2147483647">-->
@@ -61,6 +62,19 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="com.kuaishan.obtainmsg" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".jpush.MyReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.kuaishan.obtainmsg" />
             </intent-filter>
         </receiver>
