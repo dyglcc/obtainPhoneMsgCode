@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mObserver = new SmsObserver(MainActivity.this, new MsgHandler(MainActivity.this));
         Uri uri = Uri.parse("content://sms");
         getContentResolver().registerContentObserver(uri, true, mObserver);
-        requestLeaders();
+        requestMainAccounts();
 
         // jpush regiser
         registerMessageReceiver();
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void requestLeaders() {
+    private void requestMainAccounts() {
         final HashMap map = new HashMap();
         map.put("mobile", Utils.getPhone(this));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

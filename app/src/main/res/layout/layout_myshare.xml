@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical">
     <ViewStub
-        android:id="@+id/layout_myshare"
+        android:id="@+id/stub_layout_myshare"
         android:layout="@layout/stub_layout_invite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

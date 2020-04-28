@@ -21,6 +21,7 @@ public class Constants {
         public static final String GETRELATION = BuildConfig.FlagServer + "api/v1/relations";
         public static final String SAVESMS = BuildConfig.FlagServer + "api/v1/submitticket";
         public static final String MESSAGES = BuildConfig.FlagServer + "api/v1/messages";
+        public static final String APPS = BuildConfig.FlagServer + "api/v1/apps";
         //--------------------------------------------------------------------------------------变量服务器地址
         public static final String ADHOC_SERVER_GETFLAGS = BuildConfig.FlagServer +
                 "get_flags_async";

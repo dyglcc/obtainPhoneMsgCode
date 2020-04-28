@@ -1,4 +1,4 @@
-package com.kuaishan.obtainmsg;
+package com.kuaishan.obtainmsg.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;

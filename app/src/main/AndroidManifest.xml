@@ -39,7 +39,8 @@
         <activity android:name=".account.LoginActivity"></activity>
         <activity android:name=".account.RegisterActivity"></activity>
         <activity android:name=".ui.home.MessagesActivity"></activity>
-        <activity android:name=".RelationCreateActivity"></activity>
+        <activity android:name=".ui.activity.RelationCreateActivity"></activity>
+        <activity android:name=".ui.activity.ShareAppSettingActivity"></activity>
 
 <!--        <receiver android:name="com.kuaishan.obtainmsg.core.SmsReciver" >-->
 <!--            <intent-filter android:priority="2147483647">-->
