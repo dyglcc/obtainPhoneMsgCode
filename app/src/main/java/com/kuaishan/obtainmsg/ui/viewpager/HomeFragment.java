@@ -188,7 +188,7 @@ public class HomeFragment extends LazyFragment {
             if (position == 0) {
                 fragment = new MyObtainFragment();
             } else if (position == 1) {
-                fragment  = new MyObtainFragment();
+                fragment  = new MyShareFragment();
             }
             Bundle bundle = new Bundle();
             bundle.putString(MyObtainFragment.INTENT_STRING_TABNAME, tabNames[position]);

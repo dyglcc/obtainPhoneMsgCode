@@ -35,10 +35,14 @@ public class RelationCreateActivity extends AppCompatActivity {
     private Button btnGl;
     private EditText editGualian, et_name;
     private ListView list;
+    int group_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        group_id = intent.getIntExtra("group_id", 0);
+
         setContentView(R.layout.main_relation);
         btnGl = findViewById(R.id.btn_guanlian);
         btnGl.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +125,10 @@ public class RelationCreateActivity extends AppCompatActivity {
             return;
         }
         final HashMap map = new HashMap();
-        map.put("user_phone", Utils.getPhone(this));
-        map.put("relate_phone", etPhone);
+        map.put("main_account", Utils.getPhone(this));
+        map.put("sub_account", etPhone);
         map.put("name", etName);
+        map.put("group_id", group_id + "");
         showLoadingDialog("发送数据中..");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
@@ -178,5 +183,12 @@ public class RelationCreateActivity extends AppCompatActivity {
             mProgressDialog.setMessage(message);
             mProgressDialog.show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(100);
+        finish();
     }
 }

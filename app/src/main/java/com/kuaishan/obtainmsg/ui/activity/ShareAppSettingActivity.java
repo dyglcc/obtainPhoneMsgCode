@@ -37,7 +37,7 @@ public class ShareAppSettingActivity extends AppCompatActivity {
     }
     private void requestApps() {
         final HashMap map = new HashMap();
-        map.put("mobile", Utils.getPhone(this));
+        map.put("main_account", Utils.getPhone(this));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
@@ -56,7 +56,6 @@ public class ShareAppSettingActivity extends AppCompatActivity {
                                                 gson.fromJson(dataObj.optJSONArray("apps").toString(),
                                                         new TypeToken<List<AppShares>>() {
                                                         }.getType());
-
                                         refreshData(datas);
                                         // need gson;
                                     } catch (Throwable throwable) {
@@ -73,5 +72,12 @@ public class ShareAppSettingActivity extends AppCompatActivity {
     }
     private void refreshData(List data){
         adapter.setData(data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(101);
+        finish();
     }
 }

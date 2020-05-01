@@ -23,7 +23,7 @@ public class MyObtainFragment extends LazyFragment {
 
     @Override
     protected View getPreviewLayout(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.layout_preview, container, false);
+        return inflater.inflate(R.layout.layout_myshare, container, false);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class MyObtainFragment extends LazyFragment {
         position = getArguments().getInt(INTENT_INT_POSITION);
         setContentView(R.layout.fragment_tabmain_item);
         btn_invite = findViewById(R.id.btn_invite);
-        textView = (TextView) findViewById(R.id.fragment_mainTab_item_textView);
-        textView.setText(tabName + " " + position + " 界面加载完毕");
+//        textView = (TextView) findViewById(R.id.fragment_mainTab_item_textView);
+//        textView.setText(tabName + " " + position + " 界面加载完毕");
 //        progressBar = (ProgressBar) findViewById(R.id.fragment_mainTab_item_progressBar);
         handler.sendEmptyMessage(1);
     }
@@ -49,7 +49,7 @@ public class MyObtainFragment extends LazyFragment {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
-            textView.setVisibility(View.VISIBLE);
+//            textView.setVisibility(View.VISIBLE);
 //            progressBar.setVisibility(View.GONE);
         }
     };
