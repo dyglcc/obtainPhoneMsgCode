@@ -41,7 +41,16 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_alignParentRight="true"
         android:text="添加帐号"
         android:textColor="@color/colorPrimaryDark" />
+    <com.kuaishan.obtainmsg.ui.widget.HorizontalListView
+        android:id="@+id/hList"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

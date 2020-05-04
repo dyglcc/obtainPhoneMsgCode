@@ -22,7 +22,7 @@ project.ext {
     ]
 
     debugServer = [
-            server   : "\"http://223.72.29.58:9999/hotfix-console/\"",
+            server   : "\"http://223.72.29.104/hotfix-console/\"",
             track    : "\"https://tracker.appadhoc.com/\"",
             websocket: "\"https://socket.appadhoc.com/\"",
             qi_niu   : "\"https://cdn-api.appadhoc.com/\""

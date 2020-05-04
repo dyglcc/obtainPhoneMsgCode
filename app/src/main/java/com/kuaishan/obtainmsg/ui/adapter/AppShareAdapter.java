@@ -11,17 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.bean.AppShares;
-import com.kuaishan.obtainmsg.ui.bean.Relation;
-
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -109,15 +104,15 @@ public class AppShareAdapter extends BaseAdapter {
                             context.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Utils.toast(context, "添加关联帐号成功");
+                                    Utils.toast(context, "授权app成功");
                                     try {
-                                        JSONObject jsonObject = new JSONObject(str);
-                                        JSONObject dataObj = jsonObject.optJSONObject("data");
-                                        Gson gson = new Gson();
-                                        List datas =
-                                                gson.fromJson(dataObj.optJSONArray("data").toString(),
-                                                        new TypeToken<List<Relation>>() {
-                                                        }.getType());
+//                                        JSONObject jsonObject = new JSONObject(str);
+//                                        JSONObject dataObj = jsonObject.optJSONObject("data");
+//                                        Gson gson = new Gson();
+//                                        List datas =
+//                                                gson.fromJson(dataObj.optJSONArray("data").toString(),
+//                                                        new TypeToken<List<Relation>>() {
+//                                                        }.getType());
                                         // need gson;
                                     } catch (Throwable throwable) {
                                         throwable.printStackTrace();

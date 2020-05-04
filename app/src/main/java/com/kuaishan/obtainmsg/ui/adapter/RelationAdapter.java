@@ -53,7 +53,7 @@ public class RelationAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_name.setText(relation.getName());
-        holder.tv_mobile.setText(relation.getRelate_phone());
+        holder.tv_mobile.setText(relation.getSub_account());
         return convertView;
     }
 

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.kuaishan.obtainmsg.ui.bean.UserApp;
+import com.kuaishan.obtainmsg.ui.widget.HorizontalListView;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UserAppAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return null;
     }
 
     @Override
@@ -54,21 +55,32 @@ public class UserAppAdapter extends BaseAdapter {
             TextView tv_name = convertView.findViewById(R.id.tv_name);
             ImageView icon = convertView.findViewById(R.id.iv_icon);
             TextView tv_add_sub_account = convertView.findViewById(R.id.tv_add_sub_account);
-            holder = new ViewHolder(tv_name, icon,tv_add_sub_account);
+            HorizontalListView hList = convertView.findViewById(R.id.hList);
+            holder = new ViewHolder(tv_name, icon,tv_add_sub_account,hList);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         holder.tv_name.setText(usera.getApp().getApp_name());
-        holder.tv_add_sub_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context.getApplicationContext(), RelationCreateActivity.class);
-                intent.putExtra("group_id",usera.getApp_id());
-                context.startActivityForResult(intent,101);
-            }
-        });
+        if(usera.getRelations()!=null && usera.getRelations().size() > 0){
+            holder.tv_add_sub_account.setVisibility(View.GONE);
+            holder.hList.setVisibility(View.VISIBLE);
+            holder.hList.setAdapter(new SubAccountAdapter(context,usera.getRelations()));
+        }else{
+            holder.tv_add_sub_account.setVisibility(View.VISIBLE);
+            holder.hList.setVisibility(View.GONE);
+            holder.tv_add_sub_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context.getApplicationContext(), RelationCreateActivity.class);
+                    intent.putExtra("group_id",usera.getApp_id());
+                    context.startActivityForResult(intent,101);
+                }
+            });
+        }
+
+
         Glide.with(context).load(usera.getApp().getIcon_url()).placeholder(R.drawable.ic_launcher)
                 .into(holder.icon)
                 .onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
@@ -79,11 +91,14 @@ public class UserAppAdapter extends BaseAdapter {
         private TextView tv_name;
         private TextView tv_add_sub_account;
         private ImageView icon;
+        private HorizontalListView hList;
 
-        public ViewHolder(TextView tv_name, ImageView icon,TextView tv_add_sub_account) {
+        public ViewHolder(TextView tv_name, ImageView icon,TextView tv_add_sub_account,
+                          HorizontalListView hList) {
             this.tv_name = tv_name;
             this.tv_add_sub_account = tv_add_sub_account;
             this.icon = icon;
+            this.hList = hList;
         }
     }
 

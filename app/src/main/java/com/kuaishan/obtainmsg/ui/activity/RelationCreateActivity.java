@@ -61,7 +61,7 @@ public class RelationCreateActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Relation relation = (Relation) adapter.getItem(position);
                 Intent intent = new Intent(RelationCreateActivity.this, MessagesActivity.class);
-                intent.putExtra("mobile", relation.getRelate_phone());
+                intent.putExtra("mobile", relation.getMain_account());
                 startActivity(intent);
             }
         });

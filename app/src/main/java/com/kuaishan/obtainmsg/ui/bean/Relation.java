@@ -21,24 +21,25 @@ public class Relation {
 
     private String name;
 
-    public String getUser_phone() {
-        return user_phone;
+
+    public String getMain_account() {
+        return main_account;
     }
 
-    public void setUser_phone(String user_phone) {
-        this.user_phone = user_phone;
+    public void setMain_account(String main_account) {
+        this.main_account = main_account;
     }
 
-    public String getRelate_phone() {
-        return relate_phone;
+    public String getSub_account() {
+        return sub_account;
     }
 
-    public void setRelate_phone(String relate_phone) {
-        this.relate_phone = relate_phone;
+    public void setSub_account(String sub_account) {
+        this.sub_account = sub_account;
     }
 
-    private String user_phone;
-    private String relate_phone;
+    private String main_account;
+    private String sub_account;
 
     public long getUpdated_at() {
         return updated_at;

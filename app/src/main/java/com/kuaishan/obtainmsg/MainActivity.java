@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if (datas != null) {
                     for (int i = 0; i < datas.size(); i++) {
                         Relation relation = new Relation();
-                        String leaderMobile = relation.getUser_phone();
+                        String leaderMobile = relation.getMain_account();
                         if (!map.containsKey(leaderMobile)) {
                             map.put(leaderMobile, true);
                             if (activity != null && activity.get() != null) {
