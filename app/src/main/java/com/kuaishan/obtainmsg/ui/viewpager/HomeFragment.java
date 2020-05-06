@@ -11,10 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.library.banner.BannerLayout;
+import com.example.library.banner.RecyclerViewBannerBase;
 import com.kuaishan.obtainmsg.R;
-import com.kuaishan.obtainmsg.ui.adapter.WebBannerAdapter;
 import com.kuaishan.obtainmsg.ui.home.HomeViewModel;
+import com.kuaishan.obtainmsg.ui.widget.RecyclerViewBannerNormal;
 import com.shizhefei.fragment.LazyFragment;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -40,20 +40,23 @@ public class HomeFragment extends LazyFragment {
 
     private IndicatorViewPager indicatorViewPager;
     private LayoutInflater inflate;
+    private RecyclerViewBannerNormal banner;
     public static final String INTENT_STRING_TABNAME = "intent_String_tabname";
     public static final String INTENT_INT_INDEX = "intent_int_index";
     private int index;
+
+
+
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_home);
-
         //----------init homeFragment
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-//        final TextView textView = findViewById(R.id.text_home);
-        final BannerLayout recyclerBanner = findViewById(R.id.recycler);
+
+        banner = (RecyclerViewBannerNormal) findViewById(R.id.banner);
         List<String> list = new ArrayList<>();
         list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
         list.add("http://img3.imgtn.bdimg.com/it/u=2293177440,3125900197&fm=27&gp=0.jpg");
@@ -61,28 +64,18 @@ public class HomeFragment extends LazyFragment {
         list.add("http://img0.imgtn.bdimg.com/it/u=3184221534,2238244948&fm=27&gp=0.jpg");
         list.add("http://img4.imgtn.bdimg.com/it/u=1794621527,1964098559&fm=27&gp=0.jpg");
         list.add("http://img4.imgtn.bdimg.com/it/u=1243617734,335916716&fm=27&gp=0.jpg");
-        WebBannerAdapter webBannerAdapter = new WebBannerAdapter(getActivity(), list);
-        webBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+
+        banner.initBannerImageView(list, new RecyclerViewBannerBase.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getActivity(), "点击了第  " + position + "  项", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "clicked:" + position, Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerBanner.setAdapter(webBannerAdapter);
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//        });
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//            }
-//        });
+
         //----------init homeFragment
         Resources res = getResources();
 
-//		Bundle bundle = getArguments();
+        // 我的获取和我的分享
         index = 0;
         ViewPager viewPager = (ViewPager) findViewById(R.id.fragment_tabmain_viewPager);
         Indicator indicator = (Indicator) findViewById(R.id.fragment_tabmain_indicator);
@@ -193,6 +186,7 @@ public class HomeFragment extends LazyFragment {
             Bundle bundle = new Bundle();
             bundle.putString(MyObtainFragment.INTENT_STRING_TABNAME, tabNames[position]);
             bundle.putInt(MyObtainFragment.INTENT_INT_POSITION, position);
+            bundle.putBoolean(INTENT_BOOLEAN_LAZYLOAD,true);
             fragment.setArguments(bundle);
             return fragment;
         }

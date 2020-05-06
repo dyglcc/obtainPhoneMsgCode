@@ -93,6 +93,18 @@ public class Utils {
                 })
                 .show();
     }
+    /**
+     * Display setting dialog.
+     */
+    public static void showGetMSGDialog(final Context context) {
+        String message = context.getString(R.string.tryingObtain);
+
+        new AlertDialog.Builder(context).setCancelable(false)
+                .setTitle(R.string.title_dialog_obtain_msg)
+                .setMessage(message)
+                .setCancelable(true)
+                .show();
+    }
 
     private static final int REQUEST_CODE_SETTING = 1;
 

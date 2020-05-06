@@ -120,4 +120,6 @@ dependencies {
 //    由于用到了v4和recyclerview所以也要导入他们
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+//    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
 }

@@ -1,16 +1,29 @@
 package com.kuaishan.obtainmsg.ui.viewpager;
 
-import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.core.AdhocExecutorService;
+import com.kuaishan.obtainmsg.core.Constants;
+import com.kuaishan.obtainmsg.core.NetWorkUtils;
+import com.kuaishan.obtainmsg.core.Utils;
+import com.kuaishan.obtainmsg.ui.adapter.UserObtainAdapter;
+import com.kuaishan.obtainmsg.ui.bean.Relation;
 import com.shizhefei.fragment.LazyFragment;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class MyObtainFragment extends LazyFragment {
     public static final String INTENT_STRING_TABNAME = "intent_String_tabName";
@@ -18,39 +31,82 @@ public class MyObtainFragment extends LazyFragment {
     private String tabName;
     private int position;
     private TextView textView;
-    Button btn_invite;
-//    private ProgressBar progressBar;
+    private ProgressBar progressBar;
 
-    @Override
-    protected View getPreviewLayout(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.layout_myshare, container, false);
-    }
+//    @Override
+//    protected View getPreviewLayout(LayoutInflater inflater, ViewGroup container) {
+//        return inflater.inflate(R.layout.layout_myshare, container, false);
+//    }
 
+    private ListView listView;
+    private UserObtainAdapter obtainAdapter;
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
+        setContentView(R.layout.layout_myshare);
         tabName = getArguments().getString(INTENT_STRING_TABNAME);
         position = getArguments().getInt(INTENT_INT_POSITION);
-        setContentView(R.layout.fragment_tabmain_item);
-        btn_invite = findViewById(R.id.btn_invite);
 //        textView = (TextView) findViewById(R.id.fragment_mainTab_item_textView);
 //        textView.setText(tabName + " " + position + " 界面加载完毕");
-//        progressBar = (ProgressBar) findViewById(R.id.fragment_mainTab_item_progressBar);
-        handler.sendEmptyMessage(1);
+        progressBar = (ProgressBar) findViewById(R.id.fragment_mainTab_item_progressBar);
+        listView = findViewById(R.id.list);
+        obtainAdapter = new UserObtainAdapter(null, getActivity());
+        listView.setAdapter(obtainAdapter);
+        requestMyObtainApps();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
     }
 
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
-        handler.removeMessages(1);
+    }
+    private void requestMyObtainApps() {
+        final HashMap map = new HashMap();
+        map.put("sub_account", Utils.getPhone(getActivity()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            AdhocExecutorService.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.FINDSUBACCOUNT, map);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+                    if (!TextUtils.isEmpty(str)) {
+                        if (str.contains("ok")) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(str);
+                                        JSONObject dataObj = jsonObject.optJSONObject("data");
+                                        Gson gson = new Gson();
+                                        List datas =
+                                                gson.fromJson(dataObj.optJSONArray("data").toString(),
+                                                        new TypeToken<List<Relation>>() {
+                                                        }.getType());
+                                        // need gson;
+                                        refreshData(datas);
+                                    } catch (Throwable throwable) {
+                                        throwable.printStackTrace();
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(android.os.Message msg) {
-//            textView.setVisibility(View.VISIBLE);
-//            progressBar.setVisibility(View.GONE);
-        }
-    };
+    private void refreshData(List datas) {
+        obtainAdapter.setData(datas);
+    }
 }

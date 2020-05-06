@@ -59,6 +59,26 @@ public class Relation {
 
     private long updated_at;
     private long created_at;
+    private String icon_url;
+
+    public String getIcon_url() {
+        return icon_url;
+    }
+
+    public void setIcon_url(String icon_url) {
+        this.icon_url = icon_url;
+    }
+
+    public String getApp_name() {
+        return app_name;
+    }
+
+    public void setApp_name(String app_name) {
+        this.app_name = app_name;
+    }
+
+    private String app_name;
+
 
 
     public int getId() {

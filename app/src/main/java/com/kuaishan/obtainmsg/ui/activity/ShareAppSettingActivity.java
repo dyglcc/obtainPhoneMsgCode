@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
@@ -21,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
 
-public class ShareAppSettingActivity extends AppCompatActivity {
+public class ShareAppSettingActivity extends BaseActivity {
     private ListView list;
     private AppShareAdapter adapter;
     @Override
@@ -33,6 +34,12 @@ public class ShareAppSettingActivity extends AppCompatActivity {
         list = findViewById(R.id.list);
         adapter= new AppShareAdapter(null,this);
         list.setAdapter(adapter);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("授权应用");
+        }
         requestApps();
     }
     private void requestApps() {

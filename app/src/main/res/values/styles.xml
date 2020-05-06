@@ -3,9 +3,21 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColor">@color/smssdk_black</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="actionBarStyle" >@style/BlackTitle</item>
+    </style>
+    <style name="BlackTitle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@style/BlackTitleStyle</item>
+        <item name="elevation">1dp</item>
+    </style>
+
+    <style name="BlackTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/smssdk_black</item>
     </style>
 
 </resources>

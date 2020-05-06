@@ -62,8 +62,8 @@ public class MainActivity extends Activity {
         data.add(goods);
         goods = new GOODS("2015-09-29-星期一", "手机", "1000", R.mipmap.ic_launcher);
         data.add(goods);
-        mAdapter = new HorizonListviewAdapter(this, data);
-        mListView.setAdapter(mAdapter);
+//        mAdapter = new HorizonListviewAdapter(this, data);
+//        mListView.setAdapter(mAdapter);
 
     }
 

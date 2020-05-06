@@ -14,11 +14,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
@@ -26,39 +25,36 @@ import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.SmsObserver;
 import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
-import com.kuaishan.obtainmsg.ui.bean.Relation;
 import com.yanzhenjie.permission.runtime.Permission;
-
-import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     public static boolean isForeground = false;
     public static final int MSG_RECEIVED_CODE = 1;
     private SmsObserver mObserver;
-    static List datas;
 
     // jpush
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         long timeToke = LoginActivity.getTimeToken(this);
         if ((System.currentTimeMillis() - timeToke) >= Constants.COMMON.TENDAYS) {
             goLoginActivity();
             return;
         }
+        setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -74,10 +70,21 @@ public class MainActivity extends AppCompatActivity {
         mObserver = new SmsObserver(MainActivity.this, new MsgHandler(MainActivity.this));
         Uri uri = Uri.parse("content://sms");
         getContentResolver().registerContentObserver(uri, true, mObserver);
-        requestMainAccounts();
-
         // jpush regiser
         registerMessageReceiver();
+        ActionBar actionBar = getSupportActionBar();
+        System.out.println("");
+
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -112,24 +119,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
 
-            HashMap map = new HashMap();
             if (msg.what == MSG_RECEIVED_CODE) {
                 String code = (String) msg.obj;
                 T.i("receive code " + code);
-                if (datas != null) {
-                    for (int i = 0; i < datas.size(); i++) {
-                        Relation relation = new Relation();
-                        String leaderMobile = relation.getMain_account();
-                        if (!map.containsKey(leaderMobile)) {
-                            map.put(leaderMobile, true);
-                            if (activity != null && activity.get() != null) {
+                if (activity != null && activity.get() != null) {
 //                                sendSMSS(leaderMobile, code,activity.get());
-                                saveMesage2Server(activity.get(), code);
-                            } else {
-                                T.i("activity is null, null");
-                            }
-                        }
-                    }
+                    saveMesage2Server(activity.get(), code);
+                } else {
+                    T.i("activity is null, null");
                 }
             }
         }
@@ -157,39 +154,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void requestMainAccounts() {
-        final HashMap map = new HashMap();
-        map.put("mobile", Utils.getPhone(this));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            AdhocExecutorService.getInstance().execute(new Runnable() {
-                @Override
-                public void run() {
-                    final String str = NetWorkUtils.sendMessge(Constants.Url.GETRELATION, map);
-                    if (!TextUtils.isEmpty(str)) {
-                        if (str.contains("ok")) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(str);
-                                        JSONObject dataObj = jsonObject.optJSONObject("data");
-                                        Gson gson = new Gson();
-                                        datas = gson.fromJson(dataObj.optJSONArray("data").toString(),
-                                                new TypeToken<List<Relation>>() {
-                                                }.getType());
-                                        // need gson;
-                                    } catch (Throwable throwable) {
-                                        throwable.printStackTrace();
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        }
-    }
 
     private static void saveMesage2Server(final Activity context, String content) {
         final HashMap map = new HashMap();
@@ -223,7 +187,8 @@ public class MainActivity extends AppCompatActivity {
 
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.kuaishan.obtainmsg.MESSAGE_RECEIVED_ACTION";
+    public static final String MESSAGE_RECEIVED_ACTION = "com.kuaishan.obtainmsg" +
+            ".MESSAGE_RECEIVED_ACTION";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 
@@ -238,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
     public static class MessageReceiver extends BroadcastReceiver {
 
         private WeakReference<Activity> context;
-        public MessageReceiver(Activity activity){
+
+        public MessageReceiver(Activity activity) {
             context = new WeakReference<>(activity);
         }
 
@@ -262,15 +228,24 @@ public class MainActivity extends AppCompatActivity {
 
         private void setCostomMsg(String toString) {
             if (MainActivity.isForeground) {
-                if(context!=null && context.get()!=null){
+                if (context != null && context.get() != null) {
                     Dialog dialog =
                             new AlertDialog.Builder(context.get()).setMessage(toString).create();
                     dialog.show();
                     dialog.setCanceledOnTouchOutside(true);
                 }
-
             }
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+//    @Override
+//    protected void setStatusBar() {
+//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
+//    }
 }
 

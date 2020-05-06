@@ -1,19 +1,21 @@
 package com.kuaishan.obtainmsg.ui.adapter;
-
 /**
  * Created by test on 2017/11/23.
  */
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.library.banner.RecyclerViewBannerBase;
+import com.kuaishan.obtainmsg.R;
 
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -33,7 +35,8 @@ public class NormalRecyclerAdapter extends RecyclerView.Adapter<NormalRecyclerAd
 
     @Override
     public NormalHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new NormalHolder(new ImageView(context));
+        return new NormalHolder(LayoutInflater.from(context).inflate(R.layout.item_image,
+                parent,false));
     }
 
     @Override
@@ -41,7 +44,8 @@ public class NormalRecyclerAdapter extends RecyclerView.Adapter<NormalRecyclerAd
         if (urlList == null || urlList.isEmpty())
             return;
         String url = urlList.get(position % urlList.size());
-        ImageView img = (ImageView) holder.itemView;
+        CardView cardView = (CardView) holder.itemView;
+        ImageView img = cardView.findViewById(R.id.image);
         Glide.with(context).load(url).into(img);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,16 +63,15 @@ public class NormalRecyclerAdapter extends RecyclerView.Adapter<NormalRecyclerAd
     }
 
     class NormalHolder extends RecyclerView.ViewHolder {
-        ImageView bannerItem;
+        CardView bannerItem;
 
         NormalHolder(View itemView) {
             super(itemView);
-            bannerItem = (ImageView) itemView;
-            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
-            bannerItem.setLayoutParams(params);
-            bannerItem.setScaleType(ImageView.ScaleType.FIT_XY);
-
+//            ImageView bannerItem = itemView.findViewById(R.id.image);
+//            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.MATCH_PARENT);
+//            bannerItem.setLayoutParams(params);
+//            bannerItem.setScaleType(ImageView.ScaleType.FIT_XY);
         }
     }
 

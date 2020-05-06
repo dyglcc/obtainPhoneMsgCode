@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
@@ -27,11 +29,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.graphics.ColorUtils;
 
 
-public class RelationCreateActivity extends AppCompatActivity {
+public class RelationCreateActivity extends BaseActivity {
     private Button btnGl;
     private EditText editGualian, et_name;
     private ListView list;
@@ -66,6 +70,13 @@ public class RelationCreateActivity extends AppCompatActivity {
             }
         });
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("添加帐号");
+        }
+
     }
 
     private RelationAdapter adapter;
@@ -76,7 +87,8 @@ public class RelationCreateActivity extends AppCompatActivity {
 
     private void requestRelations() {
         final HashMap map = new HashMap();
-        map.put("mobile", Utils.getPhone(this));
+        map.put("main_account", Utils.getPhone(this));
+        map.put("group_id",group_id+"");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
@@ -191,4 +203,27 @@ public class RelationCreateActivity extends AppCompatActivity {
         setResult(100);
         finish();
     }
+
+
+
+    /**
+     * 判断颜色是不是亮色
+     *
+     * @param color
+     * @return
+     * @from https://stackoverflow.com/questions/24260853/check-if-color-is-dark-or-light-in-android
+     */
+    private boolean isLightColor(@ColorInt int color) {
+        return ColorUtils.calculateLuminance(color) >= 0.5;
+    }
+
+    /**
+     * 获取StatusBar颜色，默认白色
+     *
+     * @return
+     */
+    protected @ColorInt int getStatusBarColor() {
+        return Color.WHITE;
+    }
+
 }

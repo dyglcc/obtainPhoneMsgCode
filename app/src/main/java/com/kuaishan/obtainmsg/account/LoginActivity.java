@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.MainActivity;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cn.smssdk.EventHandler;
@@ -35,7 +37,7 @@ import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     private Button buttonLogin;
     private EditText et_phone, et_pass;
 
@@ -73,6 +75,11 @@ public class LoginActivity extends Activity {
                 sendCode(LoginActivity.this);
             }
         });
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setTitle("登录");
+        }
 
 
     }
@@ -195,7 +202,7 @@ public class LoginActivity extends Activity {
         page.show(context);
     }
 
-    public static void logOut(Context context){
+    public static void logOut(Activity context){
         if(context == null){
             return;
         }
@@ -205,6 +212,8 @@ public class LoginActivity extends Activity {
         editor.putLong(Constants.COMMON.TIME_TOKEN,0);
         editor.putString(Constants.COMMON.ALIAS,"");
         editor.apply();
+        start(context);
+
     }
 
 

@@ -17,13 +17,14 @@ public class Constants {
         //--------------------------------------------------------------------------------------获取试验最新更新接口
         public static final String REGISTER = BuildConfig.FlagServer + "api/v1/regist";
         public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";
-        public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addrelation";
+        public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addRelation";
         public static final String GETRELATION = BuildConfig.FlagServer + "api/v1/relations";
         public static final String SAVESMS = BuildConfig.FlagServer + "api/v1/submitticket";
         public static final String MESSAGES = BuildConfig.FlagServer + "api/v1/messages";
         public static final String GROUPS = BuildConfig.FlagServer + "api/v1/groups";
         public static final String APPS = BuildConfig.FlagServer + "api/v1/apps";
         public static final String ADDGROUP = BuildConfig.FlagServer + "api/v1/addGroup";
+        public static final String FINDSUBACCOUNT = BuildConfig.FlagServer + "api/v1/findSubAccount";
         //--------------------------------------------------------------------------------------变量服务器地址
         public static final String ADHOC_SERVER_GETFLAGS = BuildConfig.FlagServer +
                 "get_flags_async";
