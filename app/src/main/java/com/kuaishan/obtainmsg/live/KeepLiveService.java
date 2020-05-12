@@ -30,7 +30,6 @@ public class KeepLiveService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        KeepLiveService
         //API 18以下，直接发送Notification并将其置为前台
         if (Build.VERSION.SDK_INT <Build.VERSION_CODES.JELLY_BEAN_MR2) {//
             startForeground(NOTIFICATION_ID, new Notification());

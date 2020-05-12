@@ -7,32 +7,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kuaishan.obtainmsg.account.LoginActivity;
-import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
-import com.kuaishan.obtainmsg.core.NetWorkUtils;
-import com.kuaishan.obtainmsg.core.SmsObserver;
-import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
-import com.kuaishan.obtainmsg.live.KeepLiveService;
 import com.kuaishan.obtainmsg.live.LiveService;
 import com.kuaishan.obtainmsg.live.MyJobService;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,9 +32,6 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends BaseActivity {
     public static boolean isForeground = false;
-    public static final int MSG_RECEIVED_CODE = 1;
-    private SmsObserver mObserver;
-
     // jpush
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +54,6 @@ public class MainActivity extends BaseActivity {
         Utils.requestPermission(this, Permission.SEND_SMS, Permission.READ_SMS,
                 Permission.RECEIVE_SMS, Permission.READ_PHONE_STATE,
                 Permission.WRITE_EXTERNAL_STORAGE);
-        mObserver = new SmsObserver(MainActivity.this, new MsgHandler(MainActivity.this));
-        Uri uri = Uri.parse("content://sms");
-        getContentResolver().registerContentObserver(uri, true, mObserver);
         // jpush regiser
         registerMessageReceiver();
 
@@ -79,7 +61,7 @@ public class MainActivity extends BaseActivity {
         // 保活1
         LiveService.toLiveService(this);
         // 保活2
-        KeepLiveService.toLiveService(this);
+//        KeepLiveService.toLiveService(this);
         // 保活3
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             MyJobService.startJobService(this);
@@ -117,80 +99,11 @@ public class MainActivity extends BaseActivity {
         LoginActivity.start(this);
     }
 
-    public static class MsgHandler extends Handler {
-        private WeakReference<Activity> activity;
 
-        public MsgHandler(Activity activity) {
-            this.activity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            if (msg.what == MSG_RECEIVED_CODE) {
-                String code = (String) msg.obj;
-                T.i("receive code " + code);
-                if (activity != null && activity.get() != null) {
-//                                sendSMSS(leaderMobile, code,activity.get());
-                    saveMesage2Server(activity.get(), code);
-                } else {
-                    T.i("activity is null, null");
-                }
-            }
-        }
-
-
-        //发送短信
-        public static void sendSMSS(String phone, String content, Context context) {
-            if (!TextUtils.isEmpty(content) && !TextUtils.isEmpty(phone)) {
-                SmsManager manager = SmsManager.getDefault();
-                ArrayList<String> strings = manager.divideMessage(content);
-                for (int i = 0; i < strings.size(); i++) {
-                    manager.sendTextMessage(phone, null, strings.get(i), null, null);
-                }
-                Toast.makeText(context, "发送成功", Toast.LENGTH_SHORT).show();
-            } else {
-                Utils.toast(context, "手机号或内容不能为空");
-                return;
-            }
-        }
-
-    }
 
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-
-    private static void saveMesage2Server(final Activity context, String content) {
-        final HashMap map = new HashMap();
-        map.put("mobile", Utils.getPhone(context));
-        map.put("message", content);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            AdhocExecutorService.getInstance().execute(new Runnable() {
-                @Override
-                public void run() {
-                    final String str = NetWorkUtils.sendMessge(Constants.Url.SAVESMS, map);
-                    if (!TextUtils.isEmpty(str)) {
-                        if (str.contains("ok")) {
-                            context.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Utils.toast(context, str);
-                                        // need gson;
-                                    } catch (Throwable throwable) {
-                                        throwable.printStackTrace();
-                                    }
-
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        }
     }
 
     //for receive customer msg from jpush server

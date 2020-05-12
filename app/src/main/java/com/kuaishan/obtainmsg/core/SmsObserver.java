@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 
-import com.kuaishan.obtainmsg.MainActivity;
-
 /**
  *
  */
@@ -35,7 +33,7 @@ public class SmsObserver extends ContentObserver {
                 return;
             if (cur.moveToNext()) {
                 String body = cur.getString(cur.getColumnIndex("message_body"));
-                mHandler.obtainMessage(MainActivity.MSG_RECEIVED_CODE, body).sendToTarget();
+                mHandler.obtainMessage(App.MSG_RECEIVED_CODE, body).sendToTarget();
             }
         }
 
