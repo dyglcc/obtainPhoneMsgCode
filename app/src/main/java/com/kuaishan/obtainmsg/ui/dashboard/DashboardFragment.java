@@ -1,27 +1,31 @@
 package com.kuaishan.obtainmsg.ui.dashboard;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.kuaishan.obtainmsg.core.Utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
-    private Button logout, login, about, contract, privacy;
+    private View logout, about, contract, privacy;
     private TextView mainAccount,loginTv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -29,29 +33,17 @@ public class DashboardFragment extends Fragment {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-//        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-            }
-        });
+//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//            }
+//        });
         mainAccount = root.findViewById(R.id.main_account);
         loginTv = root.findViewById(R.id.tv_login_reg);
         loginTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginActivity.start(getActivity());
-            }
-        });
-
-        login = root.findViewById(R.id.btn_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getActivity() != null) {
-                    LoginActivity.start(getActivity());
-                }
             }
         });
 
@@ -66,7 +58,6 @@ public class DashboardFragment extends Fragment {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LoginActivity.logOut(getActivity());
                 Utils.toast(getActivity(),"about");
             }
         });
@@ -76,18 +67,49 @@ public class DashboardFragment extends Fragment {
             public void onClick(View v) {
 
                 Utils.toast(getActivity(),"about privacy");
-//                LoginActivity.logOut(getActivity());
             }
         });
         contract = root.findViewById(R.id.btn_contract);
         contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                LoginActivity.logOut(getActivity());
+                //如果希望使用Fragment方式打开请调用一下API
+//                FeedbackAPI.getFeedbackFragment();
+                FeedbackAPI.openFeedbackActivity(getActivity());
                 Utils.toast(getActivity(),"联系我们");
             }
         });
         return root;
+    }
+
+
+
+
+
+    private String getMmsText(String id) {
+        Uri partURI = Uri.parse("content://mms/part/" + id);
+        InputStream is = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            is = getActivity().getContentResolver().openInputStream(partURI);
+            if (is != null) {
+                InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+                BufferedReader reader = new BufferedReader(isr);
+                String temp = reader.readLine();
+                while (temp != null) {
+                    sb.append(temp);
+                    temp = reader.readLine();
+                }
+            }
+        } catch (IOException e) {}
+        finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {}
+            }
+        }
+        return sb.toString();
     }
 
     @Override

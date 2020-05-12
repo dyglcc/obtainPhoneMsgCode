@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.test.HorizonListviewAdapter;
 import com.kuaishan.obtainmsg.test.HorizontalListView;
 import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
@@ -82,9 +83,10 @@ public class UserAppAdapter extends BaseAdapter {
                 }
             });
         }
-        Glide.with(context).load(usera.getApp().getIcon_url()).placeholder(R.drawable.ic_launcher)
+        Glide.with(context).load(Constants.Url.mHost+usera.getApp().getIcon_url()).placeholder(R.drawable.ic_launcher)
                 .into(holder.icon)
                 .onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
+
         return convertView;
     }
 

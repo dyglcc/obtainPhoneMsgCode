@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.R;
@@ -120,5 +121,10 @@ public class Utils {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         return sharedPreferences.getString("mobile", "");
+    }
+
+    public static int pxToDp(Context context,int px) {
+        DisplayMetrics displayMetrics =context.getResources().getDisplayMetrics();
+        return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }

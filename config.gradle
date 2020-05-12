@@ -22,7 +22,7 @@ project.ext {
     ]
 
     debugServer = [
-            server   : "\"http://223.72.29.122/hotfix-console/\"",
+            server   : "\"https://www.kuaishanapp.net:9000/\"",
             track    : "\"https://tracker.appadhoc.com/\"",
             websocket: "\"https://socket.appadhoc.com/\"",
             qi_niu   : "\"https://cdn-api.appadhoc.com/\""
@@ -33,7 +33,7 @@ project.ext {
     ]
 
     releaseServer = [
-            server   : "\"https://experiment.appadhoc.com/\"",
+            server   : "\"https://www.kuaishan.net/hotfix-console\"",
             track    : "\"https://tracker.appadhoc.com/\"",
             websocket: "\"https://socket.appadhoc.com/\"",
             qi_niu   : "\"https://cdn-api.appadhoc.com/\""

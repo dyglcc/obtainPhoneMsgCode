@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.bean.Relation;
 
@@ -54,7 +54,7 @@ public class UserObtainAdapter extends BaseAdapter {
                     null);
             TextView tv_name = convertView.findViewById(R.id.tv_name);
             ImageView icon = convertView.findViewById(R.id.iv_icon);
-            Button btn_obtain_msg = convertView.findViewById(R.id.btn_obtain_msg);
+            TextView btn_obtain_msg = convertView.findViewById(R.id.btn_obtain_msg);
             holder = new ViewHolder(tv_name, icon, btn_obtain_msg);
             convertView.setTag(holder);
         } else {
@@ -68,7 +68,7 @@ public class UserObtainAdapter extends BaseAdapter {
                 Utils.showGetMSGDialog(context);
             }
         });
-        Glide.with(context).load(relation.getIcon_url()).placeholder(R.drawable.ic_launcher)
+        Glide.with(context).load(Constants.Url.mHost + relation.getIcon_url()).placeholder(R.drawable.ic_launcher)
                 .into(holder.icon)
                 .onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
         return convertView;
@@ -77,9 +77,9 @@ public class UserObtainAdapter extends BaseAdapter {
     private static class ViewHolder {
         private TextView tv_name;
         private ImageView icon;
-        private Button btn_obtain_msg;
+        private TextView btn_obtain_msg;
 
-        public ViewHolder(TextView tv_name, ImageView icon, Button btn_obtain_msg
+        public ViewHolder(TextView tv_name, ImageView icon, TextView btn_obtain_msg
         ) {
             this.tv_name = tv_name;
             this.btn_obtain_msg = btn_obtain_msg;

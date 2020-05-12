@@ -13,7 +13,7 @@ public class Constants {
     public static class Url {
         //-----------------------------------I
         // ---------------------------------------------------websocket
-        public static final String mServer = BuildConfig.WebsocketServer;
+        public static final String mHost = BuildConfig.FlagServer;
         //--------------------------------------------------------------------------------------获取试验最新更新接口
         public static final String REGISTER = BuildConfig.FlagServer + "api/v1/regist";
         public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";

@@ -46,7 +46,8 @@ public class NormalRecyclerAdapter extends RecyclerView.Adapter<NormalRecyclerAd
         String url = urlList.get(position % urlList.size());
         CardView cardView = (CardView) holder.itemView;
         ImageView img = cardView.findViewById(R.id.image);
-        Glide.with(context).load(url).into(img);
+        Glide.with(context).load(context.getResources().getIdentifier("gonglv", "mipmap",
+                context.getPackageName())).into(img);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

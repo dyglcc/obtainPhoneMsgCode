@@ -14,6 +14,7 @@ public class SmsReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage msg = null;
+        System.out.print("a");
         if (null != bundle) {
             Object[] smsObj = (Object[]) bundle.get("pdus");
             for (Object object : smsObj) {

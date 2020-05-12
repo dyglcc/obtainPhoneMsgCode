@@ -16,5 +16,8 @@
 
     <color name="transparent">#00000000</color>
     <color name="icon_grey">#FF959AA4</color>
+    <color name="activity_background">#f4f7f9</color>
+
+
 
 </resources>

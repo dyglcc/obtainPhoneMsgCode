@@ -2,22 +2,23 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/activity_background"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:layout_height="match_parent">
     <EditText
-        android:id="@+id/et_guanlian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="请输入关联手机号"></EditText>
-    <EditText
         android:id="@+id/et_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="给Ta起个名儿"></EditText>
-
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="关系或姓名"></EditText>
+    <EditText
+        android:id="@+id/et_guanlian"
+        android:layout_marginTop="6dp"
+        android:layout_height="48dp"
+        android:layout_width="match_parent"
+        android:hint="手机号"></EditText>
     <Button
-        android:text="关联"
+        android:text="添加"
         android:layout_width="wrap_content"
         android:id="@+id/btn_guanlian"
         android:layout_height="wrap_content"/>

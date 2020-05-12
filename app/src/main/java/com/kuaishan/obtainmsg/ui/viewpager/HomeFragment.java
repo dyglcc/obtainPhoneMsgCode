@@ -1,7 +1,7 @@
 package com.kuaishan.obtainmsg.ui.viewpager;
 
+import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.library.banner.RecyclerViewBannerBase;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.ui.activity.GonglvActivity;
 import com.kuaishan.obtainmsg.ui.home.HomeViewModel;
 import com.kuaishan.obtainmsg.ui.widget.RecyclerViewBannerNormal;
 import com.shizhefei.fragment.LazyFragment;
@@ -23,9 +22,6 @@ import com.shizhefei.view.indicator.slidebar.ColorBar;
 import com.shizhefei.view.indicator.slidebar.LayoutBar;
 import com.shizhefei.view.indicator.slidebar.ScrollBar.Gravity;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -46,8 +42,6 @@ public class HomeFragment extends LazyFragment {
     private int index;
 
 
-
-
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
@@ -56,19 +50,11 @@ public class HomeFragment extends LazyFragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
 
-        banner = (RecyclerViewBannerNormal) findViewById(R.id.banner);
-        List<String> list = new ArrayList<>();
-        list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
-        list.add("http://img3.imgtn.bdimg.com/it/u=2293177440,3125900197&fm=27&gp=0.jpg");
-        list.add("http://img3.imgtn.bdimg.com/it/u=3967183915,4078698000&fm=27&gp=0.jpg");
-        list.add("http://img0.imgtn.bdimg.com/it/u=3184221534,2238244948&fm=27&gp=0.jpg");
-        list.add("http://img4.imgtn.bdimg.com/it/u=1794621527,1964098559&fm=27&gp=0.jpg");
-        list.add("http://img4.imgtn.bdimg.com/it/u=1243617734,335916716&fm=27&gp=0.jpg");
-
-        banner.initBannerImageView(list, new RecyclerViewBannerBase.OnBannerItemClickListener() {
+        View gonglv = findViewById(R.id.image);
+        gonglv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Toast.makeText(getActivity(), "clicked:" + position, Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GonglvActivity.class));
             }
         });
 
@@ -80,16 +66,19 @@ public class HomeFragment extends LazyFragment {
         ViewPager viewPager = (ViewPager) findViewById(R.id.fragment_tabmain_viewPager);
         Indicator indicator = (Indicator) findViewById(R.id.fragment_tabmain_indicator);
 
+        int color  = getResources().getColor(R.color.colorPrimary);
         switch (index) {
             case 0:
-                indicator.setScrollBar(new ColorBar(getApplicationContext(), Color.RED, 5));
+                indicator.setScrollBar(new ColorBar(getApplicationContext(),color
+                        ,
+                        5));
                 break;
             case 1:
-                indicator.setScrollBar(new ColorBar(getApplicationContext(), Color.RED, 0,
+                indicator.setScrollBar(new ColorBar(getApplicationContext(), color, 0,
                         Gravity.CENTENT_BACKGROUND));
                 break;
             case 2:
-                indicator.setScrollBar(new ColorBar(getApplicationContext(), Color.RED, 5,
+                indicator.setScrollBar(new ColorBar(getApplicationContext(), color, 5,
                         Gravity.TOP));
                 break;
             case 3:

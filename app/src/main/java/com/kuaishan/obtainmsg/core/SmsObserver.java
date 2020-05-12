@@ -1,5 +1,6 @@
 package com.kuaishan.obtainmsg.core;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -26,20 +27,23 @@ public class SmsObserver extends ContentObserver {
     @Override
     public void onChange(boolean selfChange, Uri uri) {
         super.onChange(selfChange, uri);
-        String code;
-        ////onChange会执行二次,第二次短信才会入库
-        if (uri.toString().equals("content://sms/raw")) {
-            return;
-        }
-
-        Uri inboxUri = Uri.parse("content://sms/inbox");
-        Cursor c = mContext.getContentResolver().query(inboxUri, null, null, null, "date desc");
-        if (c != null) {
-            if (c.moveToFirst()) {
-                String body = c.getString(c.getColumnIndex("body"));//获取短信内容
+        if (uri != null && uriString.equals(uri.toString())) {
+            ContentResolver cr = mContext.getContentResolver();
+            String[] projection = new String[]{"message_body,_id"};//"_id", "address", "person",,
+            Cursor cur = cr.query(SMS_INBOX, projection, null, null, "_id desc");
+            if (null == cur)
+                return;
+            if (cur.moveToNext()) {
+                String body = cur.getString(cur.getColumnIndex("message_body"));
                 mHandler.obtainMessage(MainActivity.MSG_RECEIVED_CODE, body).sendToTarget();
             }
         }
-        c.close();
+
     }
+
+
+    public static String uriString = "content://sms/raw";
+    public static Uri SMS_INBOX = Uri.parse(uriString);
+
+
 }

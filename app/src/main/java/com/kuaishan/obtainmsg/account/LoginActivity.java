@@ -58,7 +58,6 @@ public class LoginActivity extends BaseActivity {
             goMain();
             return;
         }
-
         String phone = Utils.getPhone(this);
         if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone);
@@ -246,7 +245,7 @@ public class LoginActivity extends BaseActivity {
                     logs = "Failed with errorCode = " + code;
                     T.i(logs);
             }
-            Utils.toast(LoginActivity.this,logs);
+//            Utils.toast(LoginActivity.this,logs);
         }
     };
     private static final int MSG_SET_ALIAS = 1001;

@@ -33,7 +33,6 @@ import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -72,8 +71,6 @@ public class MainActivity extends BaseActivity {
         getContentResolver().registerContentObserver(uri, true, mObserver);
         // jpush regiser
         registerMessageReceiver();
-        ActionBar actionBar = getSupportActionBar();
-        System.out.println("");
 
 
     }
@@ -242,10 +239,5 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-//    @Override
-//    protected void setStatusBar() {
-//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
-//    }
 }
 

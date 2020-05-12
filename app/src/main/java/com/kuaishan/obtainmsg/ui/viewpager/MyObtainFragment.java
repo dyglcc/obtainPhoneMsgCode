@@ -3,11 +3,13 @@ package com.kuaishan.obtainmsg.ui.viewpager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -107,6 +109,23 @@ public class MyObtainFragment extends LazyFragment {
     }
 
     private void refreshData(List datas) {
+        int count = listView.getFooterViewsCount();
+        if(count==0){
+            View footer = LayoutInflater.from(getActivity()).inflate(R.layout.footer_obtain,null);
+            footer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
+                }
+            });
+            footer.findViewById(R.id.btn_share_weixin).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
+                }
+            });
+            listView.addFooterView(footer);
+        }
         obtainAdapter.setData(datas);
     }
 }
