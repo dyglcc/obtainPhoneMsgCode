@@ -25,6 +25,9 @@ import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.SmsObserver;
 import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
+import com.kuaishan.obtainmsg.live.KeepLiveService;
+import com.kuaishan.obtainmsg.live.LiveService;
+import com.kuaishan.obtainmsg.live.MyJobService;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.lang.ref.WeakReference;
@@ -73,6 +76,14 @@ public class MainActivity extends BaseActivity {
         registerMessageReceiver();
 
 
+        // 保活1
+        LiveService.toLiveService(this);
+        // 保活2
+        KeepLiveService.toLiveService(this);
+        // 保活3
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            MyJobService.startJobService(this);
+        }
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

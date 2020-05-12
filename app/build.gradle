@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.aliyun.ams.emas-services'
 // 添加插件
 apply plugin: 'com.mob.sdk'
 def sdk_config = rootProject.ext.sdk_config
@@ -27,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.kuaishan.obtainmsg"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -46,6 +47,7 @@ android {
                 JPUSH_APPKEY : "3c1bafd2c4145faeaa7da1bb", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
+        multiDexEnabled true
     }
 
     packagingOptions {
@@ -124,10 +126,13 @@ dependencies {
     //    由于用到了v4和recyclerview所以也要导入他们
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation(name: 'feedbackSdk', ext: 'aar')
-    //    implementation 'com.jaeger.statusbarutil:library:1.5.1'
-    implementation files('libs/utdid4all-1.0.4.jar')
-    implementation files('libs/securityguard-3.1.27.jar')
-    implementation files('libs/alisdk-ut-5.jar')
-//    implementation files('libs/android-support-v4.jar')
+
+    implementation 'com.android.support:multidex:1.0.3'
+//    implementation files('libs/alicloud-android-utils-1.1.5.jar')
+//    implementation files('libs/alicloud-android-utdid-1.1.5.3.jar')
+//    implementation files('libs/alicloud-android-ut-5.4.3.jar')
+//    implementation files('libs/alicloud-android-sdk-beacon-1.0.3.jar')
+
+//    implementation(name :'alicloud-android-feedback-3.3.1',ext:'aar')
+//    implementation(name :'alicloud-android-hotfix-3.2.14',ext:'aar')
 }

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kuaishan.obtainmsg">
     <!-- 可选权限说明-->
-    <uses-permission
-        android:name="android.permission.INTERNET" />
-<!--    允许应用程序联网（必须）-->
-    <uses-permission
-        android:name="android.permission.ACCESS_WIFI_STATE" />
-<!--    允许访问WiFi网络状态信息（必须）-->
-    <uses-permission
-        android:name="android.permission.READ_PHONE_STATE" />
-<!--    允许读取手机状态（必须）-->
-    <uses-permission
-        android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!--    允许访问网络状态（必须）-->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!--    允许写手机存储（必须-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--    允许应用程序联网（必须）-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--    允许访问WiFi网络状态信息（必须）-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--    允许读取手机状态（必须）-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--    允许访问网络状态（必须）-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--    允许写手机存储（必须-->
+
+    <!--保活permision-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/icon"
         android:name=".core.App"
-        android:networkSecurityConfig="@xml/network_security_config"
+        tools:replace="android:allowBackup"
+        android:icon="@mipmap/icon"
+        android:allowBackup="true"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:persistent="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -43,14 +45,28 @@
         <activity android:name=".ui.activity.ShareAppSettingActivity"></activity>
         <activity android:name=".ui.activity.GonglvActivity"></activity>
 
-        <receiver android:name="com.kuaishan.obtainmsg.core.SmsReciver" >
+        <activity
+            android:name=".live.LiveActivity"
+            android:theme="@style/LiveStyle" />
+
+        <receiver android:name="com.kuaishan.obtainmsg.core.SmsReciver">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-
-        <service android:name=".jpush.JService"
+        <service android:name=".live.MyJobService" />
+        <service
+            android:name=".live.LiveService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:process=":live_service" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <service android:name=".live.KeepLiveService" />
+        <service
+            android:name=".jpush.JService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -58,10 +74,11 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".jpush.JReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.kuaishan.obtainmsg" />
@@ -81,7 +98,8 @@
             </intent-filter>
         </receiver>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
