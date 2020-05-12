@@ -1,11 +1,13 @@
 package com.kuaishan.obtainmsg.core;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.R;
@@ -127,4 +129,34 @@ public class Utils {
         DisplayMetrics displayMetrics =context.getResources().getDisplayMetrics();
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
+
+
+
+    /**
+     * 获取当前进程名
+     */
+    private static String getCurrentProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager manager =
+                (ActivityManager) context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
+            if (process.pid == pid) {
+                Log.i("service:", process.processName);
+                Log.i("proccess_name:", process.processName);
+                return process.processName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 包名判断是否为主进程
+     *
+     * @param
+     * @return
+     */
+    public static boolean isMainProcess(Context context) {
+        return context.getApplicationContext().getPackageName().equals(getCurrentProcessName(context));
+    }
+
 }

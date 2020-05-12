@@ -85,7 +85,7 @@ public class App extends Application {
                     if (!TextUtils.isEmpty(str)) {
                         if (str.contains("ok")) {
                             T.i(str);
-                            Utils.toast(context, str);
+//                            Utils.toast(context, str);
                         }
                     }
                 }
