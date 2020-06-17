@@ -17,7 +17,9 @@ app share setting ,做接口，一对一关系的app share。
 然后是sharesetting界面的设计，和添加删除之后，数据重新拉取
 
 
-umeng，的意见反馈。
+阿里，的意见反馈。
+https://cn.aliyun.com/product/feedback
+oneSdk集成。
 第二：登录界面
 第三注册界面
 添加子帐号界面
