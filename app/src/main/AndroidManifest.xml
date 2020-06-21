@@ -18,7 +18,7 @@
     <!--保活permision-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
-        android:name=".core.App"
+        android:name="com.kuaishan.obtainmsg.hotfix.SophixStubApplication"
         tools:replace="android:allowBackup"
         android:icon="@mipmap/icon"
         android:allowBackup="true"
@@ -28,6 +28,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.taobao.android.hotfix.IDSECRET"
+            android:value="29503991" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="d2bd9072761af86f3783032f26bb4da9" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCXHHHGKW75Dv+2T6xTrkVY/9a4ZAKhy6h5/zlMzenLJ3/o9CmCV7N75VBDE6Etik9dRAK9OkxLBJu2legEkvOcPXxAC6opXNRzXG+wo2Y7dHpr2cH+Hh5OLfUh0KyOriEyFBPv2KCaoAevYG+LacIlm4VC+anvter8pMsmYTaUz7h9IEK0vHl3JmGH0zIu5g8AYHQv6KxuX8HOaf/rO7Sor1/De/vYxHcw+l28uKPE4mHeRWgTqv3VKtDJzqgTOoplUKLRJibZZsq610XmRUOxVbBateL4V3K6VjlWlyXdYKmczW5h+gKgtsY66ywQXkGTND34WRuNlmKCX2te2V63AgMBAAECggEBAINYEfxwHykURGeusNa7b0OAfJ4hL7h6UKJZmPCNOl1+o8tUDpBgsn1KQI1NDpeK1Jj4eHkJpy69fqsheV4gbOas+sagXPM+4Nq0yc/69u1OvOnpiJjcjPLfN2aA/ru11ty0Xu/mlxJPbt6dL9c5war2lso0P+U/dlTK2FkvvkVxQUQDR0T0V7GH9TbMEgsjSm9yEbZjY+/pK/SAK/78vwm+AIWnzjKXWOLF6wnCFWgxV34r6ZAUUf0DJOios+JlWQ6hpnkf150DnKSjuU7dPdWGCMxRvc8RUQRaCQqtnyUp34ohbTbVPfNl7AkRHTndGLQmQ6ro0pduBsVHcLOCo8ECgYEAz0GdwLBAVbogoNCiWPRQFhf8OozFnsKs7jtSD0gg6rQvFmwwVFRfLDYp5VA2fRi9fJU5UBSILbLqqMkuDyqXph8NtSSwu2ssopTQncSyuBg4Gnno5Pr17I34gvTBeB/1+VDQ3ho4CpPhMZRWu+o+9XuVxbH7GN31Henf+QOBH4kCgYEAuqZ3VHJW8Zyz5P9OSjaWz2NmnFxgnJXMaERI9YMxhQ8Qu8wjyJ5h5dFZNS0VRcd0qGJJ4R14sb93R+SqwF7liDxvKbzlhC4XYh7xE5TljnrYGMVNuoVt5DMchjPbfqpgFFpKlWJny+XFvwHgSaFgBKq9zaON0hO8q/+QVeMavD8CgYAQ+qYq2AWdQE9V/WGfefxpovNl9IxoEjjKl4+EcvtHXxWQd7KJ5hOZ8qICCE0+eF1lrG/ykIwLemHhDAI6+dlMobSkx2m3IPOaKijhE/E0Rb+q45vhznGBPKxERjrnVW74StehqnI246CKSEXGxUz9HW/Kr2cLxXtERRm1M8VLSQKBgAEVDgQTVaW4/uIJCO8tOdqh/OpTLsw5oiHIo5Oo2xSmbbZpDJwRLwgiGp5QUJtC+M4xI7SGczi0n4BvNv4+jp4nm41mZv5JNiF/hG5UorAczjv2iOjX9TcphLTSgCdP3ZbAn0YWd/uarXbaD+7dXK0qQEd890mMi7+Dj9avpmwJAoGACIEKfQZy4tWoZ01wRoTx+G8JCYGiTntuump8Qbjs4sDsOtvDG84bMu8ZQEhD4Ep3HRz64leyLO2qEVE2kXyGTcDyHlO4mUVwA16vCPYTB1ukPOfQnp+GFg1BtRKA/F/58dMFXpZY82HuIffmUlxZKQU9JKVymKECMhJVOZ1ukj4=" />
+
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -103,4 +115,9 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+
+
+    <!-- 用户反馈和热更新-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>

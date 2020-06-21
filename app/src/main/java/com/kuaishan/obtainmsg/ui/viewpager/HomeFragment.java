@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.ui.activity.GonglvActivity;
 import com.kuaishan.obtainmsg.ui.home.HomeViewModel;
-import com.kuaishan.obtainmsg.ui.widget.RecyclerViewBannerNormal;
 import com.shizhefei.fragment.LazyFragment;
 import com.shizhefei.view.indicator.Indicator;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -36,7 +35,7 @@ public class HomeFragment extends LazyFragment {
 
     private IndicatorViewPager indicatorViewPager;
     private LayoutInflater inflate;
-    private RecyclerViewBannerNormal banner;
+//    private RecyclerViewBannerNormal banner;
     public static final String INTENT_STRING_TABNAME = "intent_String_tabname";
     public static final String INTENT_INT_INDEX = "intent_int_index";
     private int index;

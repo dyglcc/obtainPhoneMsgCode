@@ -10,10 +10,12 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
+import com.taobao.sophix.SophixManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import androidx.multidex.MultiDex;
 import cn.jpush.android.api.JPushInterface;
 
 
@@ -29,13 +31,10 @@ public class App extends Application {
         mObserver = new SmsObserver(this, new MsgHandler(this));
         Uri uri = Uri.parse("content://sms");
         getContentResolver().registerContentObserver(uri, true, mObserver);
+        FeedbackAPI.init(this, "29503991","d2bd9072761af86f3783032f26bb4da9");
+        SophixManager.getInstance().queryAndLoadNewPatch();
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
 
     public static class MsgHandler extends Handler {
         private Context activity;

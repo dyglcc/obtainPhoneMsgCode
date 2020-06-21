@@ -53,7 +53,10 @@ public class MainActivity extends BaseActivity {
         NavigationUI.setupWithNavController(navView, navController);
         Utils.requestPermission(this, Permission.SEND_SMS, Permission.READ_SMS,
                 Permission.RECEIVE_SMS, Permission.READ_PHONE_STATE,
-                Permission.WRITE_EXTERNAL_STORAGE);
+                Permission.WRITE_EXTERNAL_STORAGE,
+                Permission.CAMERA,
+                Permission.RECORD_AUDIO
+        );
         // jpush regiser
         registerMessageReceiver();
 

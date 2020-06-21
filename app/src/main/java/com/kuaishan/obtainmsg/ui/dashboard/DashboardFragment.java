@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.kuaishan.obtainmsg.core.Utils;
@@ -73,12 +74,11 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Utils.toast(getActivity(),"联系我们");
+                FeedbackAPI.openFeedbackActivity();
             }
         });
         return root;
     }
-
-
 
 
 
