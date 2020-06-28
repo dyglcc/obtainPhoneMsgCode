@@ -56,4 +56,19 @@
 
     <string name="message_error_save_failed">Save failed, please try again.</string>
     <string name="tryingObtain">正在努力获取,请稍等..</string>
+    <string name="inputPhoneNumber">请输入手机号</string>
+    <string name="inputPass">请输入密码</string>
+    <string name="btnLoginString">登录</string>
+    <string name="forgotPass">忘记密码</string>
+    <string name="regString">注册</string>
+    <string name="add">添加</string>
+    <string name="phoneNumber">手机号</string>
+    <string name="relationOrName">关系或姓名</string>
+    <string name="about_us">关于我们</string>
+    <string name="tv_privacy">隐私条款</string>
+    <string name="tv_logout">退出登录</string>
+    <string name="tv_contract_us">联系我们</string>
+    <string name="obtain_msgcode">获取验证码</string>
+    <string name="try_loading">正在努力获取，请稍等...</string>
+    <string name="copy_msg_code">复制验证码</string>
 </resources>

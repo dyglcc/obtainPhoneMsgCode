@@ -39,10 +39,11 @@ import cn.smssdk.gui.RegisterPage;
 
 public class LoginActivity extends BaseActivity {
     private Button buttonLogin;
-    private EditText et_phone, et_pass;
+    private EditText et_pass;
+    private EditText et_phone;
 
     public static void start(Activity context) {
-        context.startActivity(new Intent(context,LoginActivity.class));
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 
     @Override
@@ -58,6 +59,13 @@ public class LoginActivity extends BaseActivity {
             goMain();
             return;
         }
+
+        findViewById(R.id.btn_dialog_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showGetMSGDialog(LoginActivity.this);
+            }
+        });
         String phone = Utils.getPhone(this);
         if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone);
@@ -76,11 +84,9 @@ public class LoginActivity extends BaseActivity {
         });
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null){
+        if (actionBar != null) {
             actionBar.setTitle("登录");
         }
-
-
     }
 
     private void login() {
@@ -201,15 +207,15 @@ public class LoginActivity extends BaseActivity {
         page.show(context);
     }
 
-    public static void logOut(Activity context){
-        if(context == null){
+    public static void logOut(Activity context) {
+        if (context == null) {
             return;
         }
         SharedPreferences sharedPreferences =
-                context.getSharedPreferences(Constants.COMMON.SHARE_NAME,0);
+                context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(Constants.COMMON.TIME_TOKEN,0);
-        editor.putString(Constants.COMMON.ALIAS,"");
+        editor.putLong(Constants.COMMON.TIME_TOKEN, 0);
+        editor.putString(Constants.COMMON.ALIAS, "");
         editor.apply();
         start(context);
 
@@ -225,7 +231,7 @@ public class LoginActivity extends BaseActivity {
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-            String logs ;
+            String logs;
             switch (code) {
                 case 0:
                     logs = "Set tag and alias success";
@@ -239,7 +245,8 @@ public class LoginActivity extends BaseActivity {
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     T.i(logs);
                     // 延迟 60 秒来调用 Handler 设置别名
-                    mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias),
+                            1000 * 60);
                     break;
                 default:
                     logs = "Failed with errorCode = " + code;

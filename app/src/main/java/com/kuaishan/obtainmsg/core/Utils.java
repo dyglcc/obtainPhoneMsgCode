@@ -1,6 +1,7 @@
 package com.kuaishan.obtainmsg.core;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -8,6 +9,9 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.R;
@@ -96,17 +100,20 @@ public class Utils {
                 })
                 .show();
     }
+
     /**
      * Display setting dialog.
      */
     public static void showGetMSGDialog(final Context context) {
-        String message = context.getString(R.string.tryingObtain);
-
-        new AlertDialog.Builder(context).setCancelable(false)
-                .setTitle(R.string.title_dialog_obtain_msg)
-                .setMessage(message)
-                .setCancelable(true)
-                .show();
+        if(context == null){
+            return;
+        }
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_get_msg, null);
+        dialog.setContentView(view);
+        TextView tv = view.findViewById(R.id.tv_title);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
     }
 
     private static final int REQUEST_CODE_SETTING = 1;
@@ -125,11 +132,10 @@ public class Utils {
         return sharedPreferences.getString("mobile", "");
     }
 
-    public static int pxToDp(Context context,int px) {
-        DisplayMetrics displayMetrics =context.getResources().getDisplayMetrics();
+    public static int pxToDp(Context context, int px) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
-
 
 
     /**

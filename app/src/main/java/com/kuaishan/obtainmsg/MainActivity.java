@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity {
         long timeToke = LoginActivity.getTimeToken(this);
         if ((System.currentTimeMillis() - timeToke) >= Constants.COMMON.TENDAYS) {
             goLoginActivity();
+            finish();
             return;
         }
         setContentView(R.layout.activity_main);

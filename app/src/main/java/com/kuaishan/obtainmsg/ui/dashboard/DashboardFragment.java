@@ -26,7 +26,7 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     private View logout, about, contract, privacy;
-    private TextView mainAccount,loginTv;
+    private TextView mainAccount, loginTv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,13 +52,14 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LoginActivity.logOut(getActivity());
+                getActivity().finish();
             }
         });
         about = root.findViewById(R.id.btn_about);
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.toast(getActivity(),"about");
+                Utils.toast(getActivity(), "about");
             }
         });
         privacy = root.findViewById(R.id.btn_privacy);
@@ -66,20 +67,19 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Utils.toast(getActivity(),"about privacy");
+                Utils.toast(getActivity(), "about privacy");
             }
         });
         contract = root.findViewById(R.id.btn_contract);
         contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.toast(getActivity(),"联系我们");
+                Utils.toast(getActivity(), "联系我们");
                 FeedbackAPI.openFeedbackActivity();
             }
         });
         return root;
     }
-
 
 
     private String getMmsText(String id) {
@@ -97,12 +97,13 @@ public class DashboardFragment extends Fragment {
                     temp = reader.readLine();
                 }
             }
-        } catch (IOException e) {}
-        finally {
+        } catch (IOException e) {
+        } finally {
             if (is != null) {
                 try {
                     is.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
             }
         }
         return sb.toString();
