@@ -66,6 +66,12 @@ public class LoginActivity extends BaseActivity {
                 Utils.showGetMSGDialog(LoginActivity.this);
             }
         });
+        findViewById(R.id.btn_add_myshare_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
+            }
+        });
         String phone = Utils.getPhone(this);
         if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone);

@@ -7,17 +7,17 @@
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/tv_title"
         android:layout_width="280dp"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:text="@string/obtain_msgcode" />
-
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_marginTop="36dp"
         android:layout_height="wrap_content"
         android:gravity="center">
-
         <ProgressBar
             android:id="@+id/progress_loading"
             android:layout_width="80dp"
@@ -40,6 +40,7 @@
         android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="40dp"
         android:text="@string/try_loading" />
 </LinearLayout>

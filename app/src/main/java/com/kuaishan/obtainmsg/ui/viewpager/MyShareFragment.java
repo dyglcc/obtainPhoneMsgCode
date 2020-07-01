@@ -19,7 +19,6 @@ import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
-import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.kuaishan.obtainmsg.ui.activity.ShareAppSettingActivity;
 import com.kuaishan.obtainmsg.ui.adapter.UserAppAdapter;
 import com.kuaishan.obtainmsg.ui.bean.UserApp;
@@ -123,10 +122,11 @@ public class MyShareFragment extends LazyFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Adapter adapter = parent.getAdapter();
                 UserApp userApp = (UserApp) adapter.getItem(position);
-                Intent intent = new Intent(getActivity(),
-                        RelationCreateActivity.class);
-                intent.putExtra("group_id", userApp.getApp().getId());
-                startActivityForResult(intent, 101);
+                Utils.btn_add_myshare_dialog(getActivity(),userApp.getApp().getId(),101);
+//                Intent intent = new Intent(getActivity(),
+//                        RelationCreateActivity.class);
+//                intent.putExtra("group_id", userApp.getApp().getId());
+//                startActivityForResult(intent, 101);
             }
         });
     }

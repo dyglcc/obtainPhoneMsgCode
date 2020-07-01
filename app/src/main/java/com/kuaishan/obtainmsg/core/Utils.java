@@ -1,9 +1,13 @@
 package com.kuaishan.obtainmsg.core;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -11,11 +15,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.RuntimeRationale;
+import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.mob.MobSDK;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -102,7 +108,7 @@ public class Utils {
     }
 
     /**
-     * Display setting dialog.
+     * loading dialog
      */
     public static void showGetMSGDialog(final Context context) {
         if(context == null){
@@ -114,6 +120,38 @@ public class Utils {
         TextView tv = view.findViewById(R.id.tv_title);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+    }
+    /**
+     * loading dialog
+     */
+    public static void btn_add_myshare_dialog(final Activity context, final int id, final int i) {
+        if(context == null){
+            return;
+        }
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_add_myshare_subaccount, null);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Button btnAdd = view.findViewById(R.id.tv_invite);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clipShare(context);
+                Utils.toast(context,"链接已经复制");
+            }
+        });
+        Button btnInvite = view.findViewById(R.id.tv_add);
+        btnInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(),
+                        RelationCreateActivity.class);
+                intent.putExtra("group_id", id);
+                context.startActivityForResult(intent, i);
+
+            }
+        });
     }
 
     private static final int REQUEST_CODE_SETTING = 1;
@@ -163,6 +201,18 @@ public class Utils {
      */
     public static boolean isMainProcess(Context context) {
         return context.getApplicationContext().getPackageName().equals(getCurrentProcessName(context));
+    }
+
+
+    public static void clipShare(Context context){
+        //获取剪贴板管理器：
+        ClipboardManager cm =
+                (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        // 创建普通字符型ClipData
+        ClipData mClipData = ClipData.newPlainText("亲密共享号下载链接", "https://sj.qq.com/myapp/detail" +
+                ".htm?apkName=com.cleanmaster.mguard_cn");
+        // 将ClipData内容放到系统剪贴板里。
+        cm.setPrimaryClip(mClipData);
     }
 
 }

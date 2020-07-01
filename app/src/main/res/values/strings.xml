@@ -67,8 +67,12 @@
     <string name="about_us">关于我们</string>
     <string name="tv_privacy">隐私条款</string>
     <string name="tv_logout">退出登录</string>
-    <string name="tv_contract_us">联系我们</string>
+    <string name="tv_contract_us">问题反馈</string>
     <string name="obtain_msgcode">获取验证码</string>
-    <string name="try_loading">正在努力获取，请稍等...</string>
+    <string name="try_loading">正在努力获取，请稍等…</string>
     <string name="copy_msg_code">复制验证码</string>
+    <string name="invite">邀请</string>
+    <string name="add_sub_account">立即添加</string>
+    <string name="app_add_subaccount_tips">添加联系人请确保已经下载APP并且注 册账号成功，否则会添加失败！</string>
+    <string name="tip">提示</string>
 </resources>
