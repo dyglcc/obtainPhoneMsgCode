@@ -128,7 +128,7 @@ public class Utils {
         if(context == null){
             return;
         }
-        Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_add_myshare_subaccount, null);
         dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
@@ -139,6 +139,7 @@ public class Utils {
             public void onClick(View v) {
                 clipShare(context);
                 Utils.toast(context,"链接已经复制");
+                dialog.dismiss();
             }
         });
         Button btnInvite = view.findViewById(R.id.tv_add);
@@ -149,7 +150,7 @@ public class Utils {
                         RelationCreateActivity.class);
                 intent.putExtra("group_id", id);
                 context.startActivityForResult(intent, i);
-
+                dialog.dismiss();
             }
         });
     }

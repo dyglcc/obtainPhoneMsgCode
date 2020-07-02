@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class HorizonListviewAdapter extends BaseAdapter {
 
-    String[] colors = new String[]{"#B1CEFF", "#FFC8C7", "#FCD9AC"};
+    public static String[] colors = new String[]{"#B1CEFF", "#FFC8C7", "#FCD9AC"};
 
     private LayoutInflater inflater = null;
     private List<Relation> relations = null;

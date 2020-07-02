@@ -120,7 +120,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.yanzhenjie:permission:2.0.3'
+//    implementation 'com.yanzhenjie:permission:2.0.3'
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'cn.jiguang.sdk:jpush:3.6.0'
@@ -134,6 +134,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.android.support:multidex:1.0.3'
+    api (project(':permission'))
     //    implementation files('libs/alicloud-android-utils-1.1.5.jar')
     //    implementation files('libs/alicloud-android-utdid-1.1.5.3.jar')
     //    implementation files('libs/alicloud-android-ut-5.4.3.jar')
