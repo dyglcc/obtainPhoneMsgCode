@@ -15,6 +15,8 @@ import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
@@ -22,7 +24,7 @@ import androidx.annotation.Nullable;
 public class RegisterActivity extends Activity {
 
     private Button buttonReg;
-    private EditText pass1, pass2,et_phone,et_name;
+    private EditText pass1, pass2, et_phone, et_name;
     private String mobile;
 
     @Override
@@ -45,7 +47,6 @@ public class RegisterActivity extends Activity {
         });
 
     }
-
     private void reg() {
         String pass_1 = pass1.getText().toString();
         String pass_2 = pass2.getText().toString();
@@ -73,15 +74,30 @@ public class RegisterActivity extends Activity {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
-                    String str = NetWorkUtils.sendMessge(Constants.Url.REGISTER, map);
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.REGISTER, map);
                     if (!TextUtils.isEmpty(str)) {
-                        if(str.contains("ok")){
+                        if (str.contains("ok")) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     dismiss();
-                                    Utils.toast(RegisterActivity.this,"注册成功，请登录");
+                                    Utils.toast(RegisterActivity.this, "注册成功，请登录");
                                     finish();
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dismiss();
+                                    try {
+                                        JSONObject object = new JSONObject(str);
+                                        String msg = object.optString("message");
+                                        Utils.toast(RegisterActivity.this, msg);
+                                    } catch (Throwable e) {
+                                        e.printStackTrace();
+                                        Utils.toast(RegisterActivity.this, "未知错误");
+                                    }
                                 }
                             });
                         }
@@ -94,13 +110,14 @@ public class RegisterActivity extends Activity {
 
     private ProgressDialog mProgressDialog;
 
-    private void dismiss(){
-        if(!this.isFinishing()){
-            if(mProgressDialog !=null && mProgressDialog.isShowing()){
+    private void dismiss() {
+        if (!this.isFinishing()) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
         }
     }
+
     public void showLoadingDialog(String message) {
         if (!this.isFinishing()) {
             if (mProgressDialog == null) {

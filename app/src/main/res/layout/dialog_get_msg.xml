@@ -7,40 +7,70 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="20dp"
         android:id="@+id/tv_title"
         android:layout_width="280dp"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="@string/obtain_msgcode" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:gravity="center">
+
         <ProgressBar
             android:id="@+id/progress_loading"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:indeterminateDrawable="@drawable/progressbar"
-            android:indeterminateDuration="3500"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:indeterminateDrawable="@drawable/progressbar"
+            android:indeterminateDuration="3500" />
 
         <TextView
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
             android:layout_centerInParent="true"
-            android:text="60S" />
+            android:text="60S"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:visibility="invisible" />
+
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_marginTop="26dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/try_loading" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:text="@string/try_loading" />
+
+        <Button
+            android:id="@+id/btn_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector_button"
+            android:text="@string/copyMsM"
+            android:textColor="@color/white"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -65,12 +65,11 @@ public class UserObtainAdapter extends BaseAdapter {
         holder.btn_obtain_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.showGetMSGDialog(context);
+                Utils.showGetMSGDialog(context,relation.getMain_account(),relation.getApp_name());
             }
         });
-        Glide.with(context).load(Constants.Url.mHost + relation.getIcon_url()).placeholder(R.drawable.ic_launcher)
-                .into(holder.icon)
-                .onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
+        Glide.with(context).load(Constants.Url.mHost + relation.getIcon_url())
+                .into(holder.icon);
         return convertView;
     }
 

@@ -59,11 +59,10 @@ public class LoginActivity extends BaseActivity {
             goMain();
             return;
         }
-
         findViewById(R.id.btn_dialog_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.showGetMSGDialog(LoginActivity.this);
+                todo ,instance task top standared
             }
         });
         findViewById(R.id.btn_add_myshare_dialog).setOnClickListener(new View.OnClickListener() {
@@ -86,6 +85,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 sendCode(LoginActivity.this);
+            }
+        });
+        findViewById(R.id.btn_forget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForgotActivity.start(LoginActivity.this);
             }
         });
 

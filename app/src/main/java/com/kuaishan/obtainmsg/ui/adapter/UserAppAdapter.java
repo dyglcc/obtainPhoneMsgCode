@@ -79,9 +79,8 @@ public class UserAppAdapter extends BaseAdapter {
                 }
             });
         }
-        Glide.with(context).load(Constants.Url.mHost + usera.getApp().getIcon_url()).placeholder(R.drawable.ic_launcher)
-                .into(holder.icon)
-                .onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
+        Glide.with(context).load(Constants.Url.mHost + usera.getApp().getIcon_url())
+                .into(holder.icon);
 
         return convertView;
     }

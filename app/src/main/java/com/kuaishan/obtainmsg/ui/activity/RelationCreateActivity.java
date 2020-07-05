@@ -1,6 +1,9 @@
 package com.kuaishan.obtainmsg.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -69,6 +72,32 @@ public class RelationCreateActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
+                                           long id) {
+                if(adapter == null){
+                    Utils.toast(RelationCreateActivity.this,"ops!,error");
+                    return false;
+                }
+                final Relation relation = (Relation) adapter.getItem(position);
+                Dialog dialog = new AlertDialog.Builder(RelationCreateActivity.this).setTitle(
+                        "删除").setMessage("确定删除选中共享帐号").setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        requestDeleteSubAccount(relation);
+                    }
+                }).show();
+                return false;
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -77,6 +106,43 @@ public class RelationCreateActivity extends BaseActivity {
             actionBar.setTitle("添加帐号");
         }
 
+    }
+    private void requestDeleteSubAccount(Relation relation) {
+        final HashMap map = new HashMap();
+        map.put("main_account", Utils.getPhone(this));
+        map.put("group_id",group_id+"");
+        map.put("sub_account",relation.getSub_account());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            AdhocExecutorService.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.D_SUB_ACCOUNT, map);
+                    if (!TextUtils.isEmpty(str)) {
+                        if (str.contains("ok")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(str);
+                                        JSONObject dataObj = jsonObject.optJSONObject("data");
+                                        Gson gson = new Gson();
+                                        List datas =
+                                                gson.fromJson(dataObj.optJSONArray("data").toString(),
+                                                        new TypeToken<List<Relation>>() {
+                                                        }.getType());
+                                        // need gson;
+                                        refreshData(datas);
+                                    } catch (Throwable throwable) {
+                                        throwable.printStackTrace();
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private RelationAdapter adapter;

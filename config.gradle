@@ -4,7 +4,7 @@ project.ext {
             //--------------------------------------------------------------------------------------2.0编程 2.1可视化
             version_code       : "2.1",
             //--------------------------------------------------------------------------------------包名sdk version
-            version_name       : "5.1.8",
+            version_name       : "0.0.2",
             //--------------------------------------------------------------------------------------release是否混淆
             obscure            : false,
             //-------"device_id": "458b0e45459b1e6a",
@@ -22,14 +22,14 @@ project.ext {
     ]
 
     debugServer = [
-            server   : "\"https://www.kuaishanapp.net:9000/\"",
-            track    : "\"https://tracker.appadhoc.com/\"",
-            websocket: "\"https://socket.appadhoc.com/\"",
-            qi_niu   : "\"https://cdn-api.appadhoc.com/\""
-//server   : "\"http://experiment.dev.com/\"",
-//track    : "\"http://tracker.dev.com/\"",
-//websocket: "\"http://socket.appadhoc.com/\"",
-//qi_niu   : "\"http://cdn-api.appadhoc.com/\""
+//            server   : "\"https://www.kuaishanapp.net:9000/\"",
+//            track    : "\"https://tracker.appadhoc.com/\"",
+//            websocket: "\"https://socket.appadhoc.com/\"",
+//            qi_niu   : "\"https://cdn-api.appadhoc.com/\""
+server   : "\"http://192.168.1.2:9000/\"",
+track    : "\"http://tracker.dev.com/\"",
+websocket: "\"http://socket.appadhoc.com/\"",
+qi_niu   : "\"http://cdn-api.appadhoc.com/\""
     ]
 
     releaseServer = [

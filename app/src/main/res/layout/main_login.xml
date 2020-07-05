@@ -16,9 +16,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="60dp">
-
 
         <EditText
             android:id="@+id/et_pass"
@@ -42,23 +40,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
+        <TextView
             android:id="@+id/btn_reg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_button"
+            android:layout_marginStart="6dp"
+            android:layout_width="120dp"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
             android:text="@string/regString"
-            android:textColor="@color/white"
+            android:textColor="@color/obtain_blue"
             android:textSize="14dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_forget"
             android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_button"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:gravity="center_vertical|end"
             android:text="@string/forgotPass"
-            android:textColor="@color/white"
+            android:textColor="@color/obtain_blue"
             android:textSize="14dp" />
 
     </RelativeLayout>
@@ -71,6 +70,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="btn_add_myshare_dialog"
         android:id="@+id/btn_add_myshare_dialog"/>
 

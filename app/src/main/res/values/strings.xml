@@ -58,8 +58,9 @@
     <string name="tryingObtain">正在努力获取,请稍等..</string>
     <string name="inputPhoneNumber">请输入手机号</string>
     <string name="inputPass">请输入密码</string>
+    <string name="inputPassNew">请输入新密码</string>
     <string name="btnLoginString">登录</string>
-    <string name="forgotPass">忘记密码</string>
+    <string name="forgotPass">忘记密码?</string>
     <string name="regString">注册</string>
     <string name="add">添加</string>
     <string name="phoneNumber">手机号</string>
@@ -75,4 +76,8 @@
     <string name="add_sub_account">立即添加</string>
     <string name="app_add_subaccount_tips">添加联系人请确保已经下载APP并且注 册账号成功，否则会添加失败！</string>
     <string name="tip">提示</string>
+    <string name="copyMsM">复制验证码</string>
+    <string name="giveMyselfName">给自己起个名儿</string>
+    <string name="confirmPass">请确认密码</string>
+    <string name="sure">确定</string>
 </resources>

@@ -20,7 +20,6 @@ import cn.jpush.android.api.JPushInterface;
 
 
 public class App extends Application {
-    private SmsObserver mObserver;
     public static final int MSG_RECEIVED_CODE = 1;
 
     @Override
@@ -28,19 +27,21 @@ public class App extends Application {
         super.onCreate();
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-        mObserver = new SmsObserver(this, new MsgHandler(this));
-        Uri uri = Uri.parse("content://sms");
-        getContentResolver().registerContentObserver(uri, true, mObserver);
-        FeedbackAPI.init(this, "29503991","d2bd9072761af86f3783032f26bb4da9");
+        if (Build.VERSION.SDK_INT > 23) {
+            SmsObserver mObserver = new SmsObserver(this, new MsgHandler(this));
+            Uri uri = Uri.parse("content://sms");
+            getContentResolver().registerContentObserver(uri, true, mObserver);
+        }
+        FeedbackAPI.init(this, "29503991", "d2bd9072761af86f3783032f26bb4da9");
         SophixManager.getInstance().queryAndLoadNewPatch();
     }
 
 
     public static class MsgHandler extends Handler {
-        private Context activity;
+        private Context context;
 
         public MsgHandler(Context activity) {
-            this.activity = activity;
+            this.context = activity;
         }
 
         @Override
@@ -50,7 +51,7 @@ public class App extends Application {
                 String code = (String) msg.obj;
                 T.i("receive code " + code);
 //                                sendSMSS(leaderMobile, code,activity.get());
-                saveMesage2Server(activity, code);
+                saveMesage2Server(context, code);
             }
         }
     }

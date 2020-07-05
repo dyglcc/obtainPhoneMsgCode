@@ -16,7 +16,11 @@ public class Constants {
         public static final String mHost = BuildConfig.FlagServer;
         //--------------------------------------------------------------------------------------获取试验最新更新接口
         public static final String REGISTER = BuildConfig.FlagServer + "api/v1/regist";
+        public static final String D_SUB_ACCOUNT = BuildConfig.FlagServer + "api/v1/dSubAccount";
+        public static final String G_SINGLE_MSG = BuildConfig.FlagServer + "api/v1" +
+                "/getSingleMessage";
         public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";
+        public static final String FORGOT_PASS = BuildConfig.FlagServer + "api/v1/forgotPass";
         public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addRelation";
         public static final String GETRELATION = BuildConfig.FlagServer + "api/v1/relations";
         public static final String SAVESMS = BuildConfig.FlagServer + "api/v1/submitticket";

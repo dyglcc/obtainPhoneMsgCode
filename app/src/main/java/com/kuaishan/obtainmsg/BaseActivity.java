@@ -9,17 +9,24 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(getResources().getColor(R.color.smssdk_black), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        setaaaStatusBar();
+        Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         ActionBar actionBar = getSupportActionBar();
+        if (upArrow != null) {
+            upArrow.setColorFilter(getResources().getColor(R.color.smssdk_black),
+                    PorterDuff.Mode.SRC_ATOP);
+
+            if (actionBar != null) {
+                actionBar.setHomeAsUpIndicator(upArrow);
+            }
+        }
+        setaaaStatusBar();
         if (actionBar != null) {
             actionBar.setElevation(0);
         }
@@ -32,6 +39,7 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     /**
      * Android 6.0 以上设置状态栏颜色
      */

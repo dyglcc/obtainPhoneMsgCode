@@ -69,7 +69,7 @@ public class AppShareAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_app_name.setText(app.getApp_name());
-        Glide.with(context).load(Constants.Url.mHost + app.getIcon_url()).placeholder(R.drawable.ic_launcher).into(holder.iv_icon).onLoadFailed(null, context.getResources().getDrawable(R.drawable.ic_launcher));
+        Glide.with(context).load(Constants.Url.mHost + app.getIcon_url()).into(holder.iv_icon);
         holder.switchCompat.setChecked(app.getStatus() == 1);
         holder.switchCompat.setOnClickListener(new View.OnClickListener() {
             @Override
