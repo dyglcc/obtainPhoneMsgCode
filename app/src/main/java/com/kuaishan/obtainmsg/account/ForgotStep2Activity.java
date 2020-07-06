@@ -93,7 +93,6 @@ public class ForgotStep2Activity extends BaseActivity {
                                     Utils.savePhone(etPhone,ForgotStep2Activity.this);
                                     Utils.toast(ForgotStep2Activity.this,"设置密码成功");
                                     LoginActivity.start(ForgotStep2Activity.this);
-                                    finish();
                                 }
                             });
                         } else {
@@ -131,4 +130,9 @@ public class ForgotStep2Activity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        T.i("Main onDestory forgot2");
+    }
 }

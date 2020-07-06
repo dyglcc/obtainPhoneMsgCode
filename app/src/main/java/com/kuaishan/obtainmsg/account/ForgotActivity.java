@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
 
 import java.util.HashMap;
@@ -68,10 +69,6 @@ public class ForgotActivity extends BaseActivity {
         RegisterPage page = new RegisterPage();
         //如果使用我们的ui，没有申请模板编号的情况下需传null
         page.setTempCode(null);
-        page.setRegisterCallback(new EventHandler(){
-
-
-        });
         page.setRegisterCallback(new EventHandler() {
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
@@ -83,7 +80,6 @@ public class ForgotActivity extends BaseActivity {
                     verfyedPhone = (String) phoneMap.get("phone");
                     Utils.savePhone(verfyedPhone,ForgotActivity.this);
                     ForgotStep2Activity.start(ForgotActivity.this);
-                    finish();
                     // TODO 利用国家代码和手机号码进行后续的操作
                 } else {
                     // TODO 处理错误的结果
@@ -91,5 +87,11 @@ public class ForgotActivity extends BaseActivity {
             }
         });
         page.show(context);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        T.i("Main onDestory forgot1");
     }
 }

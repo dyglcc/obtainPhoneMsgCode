@@ -62,7 +62,9 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_dialog_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                todo ,instance task top standared
+                Intent intent = new Intent(LoginActivity.this,
+                        com.kuaishan.obtainmsg.test.MainActivity.class);
+                startActivity(intent);
             }
         });
         findViewById(R.id.btn_add_myshare_dialog).setOnClickListener(new View.OnClickListener() {

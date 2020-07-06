@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".account.LoginActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             ></activity>
         <activity android:name=".account.RegisterActivity"></activity>
         <activity android:name=".account.ForgotActivity"></activity>
@@ -59,6 +59,7 @@
         <activity android:name=".ui.activity.RelationCreateActivity"></activity>
         <activity android:name=".ui.activity.ShareAppSettingActivity"></activity>
         <activity android:name=".ui.activity.GonglvActivity"></activity>
+        <activity android:name=".test.MainActivity"/>
 
         <activity
             android:name=".live.LiveActivity"

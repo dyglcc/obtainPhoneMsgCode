@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.kuaishan.obtainmsg.R;
+import com.kuaishan.obtainmsg.account.LoginActivity;
+import com.kuaishan.obtainmsg.core.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_test);
         //initView();
         initView2();
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.start(MainActivity.this);
+            }
+        });
     }
 
     private void initView2() {
@@ -109,4 +117,9 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        T.i("Main onDestory");
+    }
 }
