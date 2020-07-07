@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" >
+    <item android:state_pressed="true" android:drawable="@mipmap/share" >
         <shape android:shape="rectangle">
             <corners android:radius="18dp"/>
             <solid android:color="@color/invite_pressed"/>
         </shape>
 
     </item>
-    <item>
-        <shape android:shape="rectangle">
+    <item android:drawable="@mipmap/share">
+        <shape android:shape="rectangle" >
             <corners android:radius="18dp"/>
             <solid android:color="@color/invite_normal"/>
         </shape>

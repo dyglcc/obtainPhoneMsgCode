@@ -32,17 +32,14 @@
         <Button
             android:id="@+id/tv_invite"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_launcher"
-            android:background="@drawable/selector_invite"
-            android:textColor="@color/obtain_blue"
-            android:text="@string/invite" />
+            android:background="@drawable/selector_invite" />
 
         <Button
             android:id="@+id/tv_add"
             android:layout_width="0px"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:textColor="@color/white"

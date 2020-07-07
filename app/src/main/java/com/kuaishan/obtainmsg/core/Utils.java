@@ -55,6 +55,9 @@ public class Utils {
     }
 
     public static void toast(final Context context, final String message) {
+        if(context == null){
+            return;
+        }
         new Handler(context.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

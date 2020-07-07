@@ -41,6 +41,7 @@
         android:singleLine="true"
         android:gravity="center"
         android:text="添加帐号"
+        android:layout_marginRight="10dp"
         android:textColor="@color/colorPrimaryDark" />
 
     <com.kuaishan.obtainmsg.test.HorizontalListView

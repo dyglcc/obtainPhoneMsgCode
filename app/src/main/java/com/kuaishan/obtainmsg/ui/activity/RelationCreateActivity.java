@@ -25,7 +25,6 @@ import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.ui.adapter.RelationAdapter;
 import com.kuaishan.obtainmsg.ui.bean.Relation;
-import com.kuaishan.obtainmsg.ui.home.MessagesActivity;
 
 import org.json.JSONObject;
 
@@ -63,15 +62,15 @@ public class RelationCreateActivity extends BaseActivity {
         list = findViewById(R.id.list);
         adapter = new RelationAdapter(null, this);
         list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Relation relation = (Relation) adapter.getItem(position);
-                Intent intent = new Intent(RelationCreateActivity.this, MessagesActivity.class);
-                intent.putExtra("mobile", relation.getMain_account());
-                startActivity(intent);
-            }
-        });
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Relation relation = (Relation) adapter.getItem(position);
+//                Intent intent = new Intent(RelationCreateActivity.this, MessagesActivity.class);
+//                intent.putExtra("mobile", relation.getMain_account());
+//                startActivity(intent);
+//            }
+//        });
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override

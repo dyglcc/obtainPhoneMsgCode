@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/tv_share_add_app"
-        android:drawableLeft="@drawable/add"
+        android:drawableLeft="@mipmap/add_auth"
         android:layout_width="match_parent"
         android:height="50dp"
         android:gravity="center_vertical|left"

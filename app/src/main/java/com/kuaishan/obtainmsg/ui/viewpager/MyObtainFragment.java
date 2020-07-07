@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +41,7 @@ public class MyObtainFragment extends LazyFragment {
 
     private ListView listView;
     private UserObtainAdapter obtainAdapter;
+
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
@@ -66,6 +66,7 @@ public class MyObtainFragment extends LazyFragment {
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
     }
+
     private void requestMyObtainApps() {
         final HashMap map = new HashMap();
         map.put("sub_account", Utils.getPhone(getActivity()));
@@ -109,23 +110,28 @@ public class MyObtainFragment extends LazyFragment {
     }
 
     private void refreshData(List datas) {
-        int count = listView.getFooterViewsCount();
-        if(count==0){
-            View footer = LayoutInflater.from(getActivity()).inflate(R.layout.footer_obtain,null);
-            footer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
-                }
-            });
-            footer.findViewById(R.id.btn_share_weixin).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
-                }
-            });
-            listView.addFooterView(footer);
+        if (datas == null) {
+            addFooter();
+        } else {
+            int count = listView.getFooterViewsCount();
+            if (count == 0 && datas.size() == 0) {
+                addFooter();
+            }
+            obtainAdapter.setData(datas);
         }
-        obtainAdapter.setData(datas);
+    }
+
+    private void addFooter() {
+        View footer = LayoutInflater.from(getActivity()).inflate(R.layout.footer_obtain, null);
+        View.OnClickListener clickListenter = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.clipShare(getActivity());
+                Utils.toast(getActivity(), "已复制链接,马上分享微信好友～");
+            }
+        };
+        footer.setOnClickListener(clickListenter);
+        footer.findViewById(R.id.btn_share_weixin).setOnClickListener(clickListenter);
+        listView.addFooterView(footer);
     }
 }

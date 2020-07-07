@@ -25,7 +25,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher" />
+                android:src="@mipmap/avator" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -62,11 +62,11 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_launcher"
+            android:drawableStart="@mipmap/fankui"
             android:text="@string/tv_contract_us"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:layout_marginStart="16dp"
+            android:drawablePadding="@dimen/permission_sp_16"
             android:textColor="#FF333333"
             android:textSize="18dp" />
         <ImageView
@@ -83,6 +83,7 @@
         android:id="@+id/btn_about"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -119,6 +120,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
         android:paddingTop="16dp"
         android:background="@drawable/actionsheet_single_selector"
         android:orientation="horizontal">
@@ -150,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="12dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:paddingTop="16dp"
         android:background="@drawable/actionsheet_single_selector"
@@ -161,11 +163,11 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_launcher"
             android:text="@string/tv_logout"
             android:gravity="center_vertical"
+            android:drawableStart="@mipmap/out"
             android:singleLine="true"
-            android:layout_marginStart="16dp"
+            android:drawablePadding="10dp"
             android:textColor="#FF333333"
             android:textSize="18dp" />
         <ImageView
@@ -178,29 +180,5 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_about"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="关于我们"-->
-<!--        android:textColor="#ffff00"-->
-<!--        android:textSize="30dp" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_privacy"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="隐私条款"-->
-<!--        android:textColor="#ffff00"-->
-<!--        android:textSize="30dp" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_logout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="logout"-->
-<!--        android:textColor="#ffff00"-->
-<!--        android:textSize="30dp" />-->
 
 </LinearLayout>

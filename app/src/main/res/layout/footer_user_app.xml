@@ -19,7 +19,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@mipmap/add_auth" />
     </androidx.cardview.widget.CardView>
 
     <TextView
