@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kuaishan.obtainmsg.account.LoginActivity;
+import com.kuaishan.obtainmsg.core.App;
 import com.kuaishan.obtainmsg.core.Constants;
+import com.kuaishan.obtainmsg.core.SmsObserver;
 import com.kuaishan.obtainmsg.core.Utils;
 import com.kuaishan.obtainmsg.live.LiveService;
 import com.kuaishan.obtainmsg.live.MyJobService;
@@ -69,6 +72,14 @@ public class MainActivity extends BaseActivity {
         // 保活3
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             MyJobService.startJobService(this);
+        }
+
+
+        // init provider
+        if (Build.VERSION.SDK_INT > 23) {
+            SmsObserver mObserver = new SmsObserver(this, new App.MsgHandler(this));
+            Uri uri = Uri.parse("content://sms");
+            getContentResolver().registerContentObserver(uri, true, mObserver);
         }
     }
     @Override

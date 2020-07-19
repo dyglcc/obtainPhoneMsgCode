@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.RuntimeRationale;
+import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.kuaishan.obtainmsg.ui.bean.SubTicket;
 import com.mob.MobSDK;
@@ -266,6 +268,43 @@ public class Utils {
                 intent.putExtra("group_id", id);
                 context.startActivityForResult(intent, i);
                 dialog.dismiss();
+            }
+        });
+    }
+    /**
+     * loading dialog
+     */
+    public static void showPrivicyDialog(final Activity context,boolean firstOpenApp) {
+        if (context == null) {
+            return;
+        }
+        final Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_privacy,
+                null);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Button btnInvite = view.findViewById(R.id.tv_add);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView tvCount = view.findViewById(R.id.tv_count);
+        tvCount.setMovementMethod(new ScrollingMovementMethod());
+        final Button btnDisagree = view.findViewById(R.id.btnDisagree);
+        if(!firstOpenApp){
+            btnDisagree.setVisibility(View.GONE);
+        }
+
+        btnDisagree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                context.finish();
+            }
+        });
+        btnInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                LoginActivity.saveFirstOpenApp(context);
             }
         });
     }

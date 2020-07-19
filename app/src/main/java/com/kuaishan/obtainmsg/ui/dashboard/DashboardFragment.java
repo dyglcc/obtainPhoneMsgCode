@@ -66,8 +66,7 @@ public class DashboardFragment extends Fragment {
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Utils.toast(getActivity(), "about privacy");
+                Utils.showPrivicyDialog(getActivity(),false);
             }
         });
         contract = root.findViewById(R.id.btn_contract);

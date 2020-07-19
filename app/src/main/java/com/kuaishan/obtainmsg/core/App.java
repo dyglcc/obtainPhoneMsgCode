@@ -27,11 +27,7 @@ public class App extends Application {
         super.onCreate();
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-        if (Build.VERSION.SDK_INT > 23) {
-            SmsObserver mObserver = new SmsObserver(this, new MsgHandler(this));
-            Uri uri = Uri.parse("content://sms");
-            getContentResolver().registerContentObserver(uri, true, mObserver);
-        }
+
         FeedbackAPI.init(this, "29503991", "d2bd9072761af86f3783032f26bb4da9");
         SophixManager.getInstance().queryAndLoadNewPatch();
     }

@@ -33,7 +33,7 @@ project.ext {
     ]
 
     releaseServer = [
-            server   : "\"https://www.kuaishan.net/hotfix-console\"",
+            server   : "\"https://www.kuaishanapp.net:9000/\"",
             track    : "\"https://tracker.appadhoc.com/\"",
             websocket: "\"https://socket.appadhoc.com/\"",
             qi_niu   : "\"https://cdn-api.appadhoc.com/\""

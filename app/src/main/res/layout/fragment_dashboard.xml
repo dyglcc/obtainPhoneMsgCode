@@ -120,7 +120,6 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
         android:paddingTop="16dp"
         android:background="@drawable/actionsheet_single_selector"
         android:orientation="horizontal">
@@ -130,11 +129,11 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_launcher"
+            android:drawableStart="@mipmap/privicy"
             android:text="@string/tv_privacy"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:layout_marginStart="16dp"
+            android:drawablePadding="16dp"
             android:textColor="#FF333333"
             android:textSize="18dp" />
         <ImageView

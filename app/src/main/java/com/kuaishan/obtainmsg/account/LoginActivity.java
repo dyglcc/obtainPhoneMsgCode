@@ -100,6 +100,14 @@ public class LoginActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setTitle("登录");
         }
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(getisFirstOpen(LoginActivity.this)){
+                    Utils.showPrivicyDialog(LoginActivity.this,true);
+                }
+            }
+        },1000);
     }
 
     private void login() {
@@ -158,7 +166,17 @@ public class LoginActivity extends BaseActivity {
     public static long getTimeToken(Context context) {
         return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getLong(Constants.COMMON.TIME_TOKEN, 0);
     }
+    public static boolean getisFirstOpen(Context context) {
+        return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getBoolean(Constants.COMMON.FIRST_OPEN, true);
+    }
 
+    public static void saveFirstOpenApp(Activity context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.COMMON.FIRST_OPEN,true);
+        editor.apply();
+    }
     private void saveTimeToken() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

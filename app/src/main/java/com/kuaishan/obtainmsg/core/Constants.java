@@ -9,6 +9,7 @@ public class Constants {
         public static final long TENDAYS = 10 * 24 * 3600 * 1000;
         public static String TIME_TOKEN = "time_token";
         public static String ALIAS = "alias";
+        public static String FIRST_OPEN = "firstOpen";
     }
     public static class Url {
         //-----------------------------------I
