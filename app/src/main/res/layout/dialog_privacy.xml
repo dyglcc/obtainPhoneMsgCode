@@ -15,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:textSize="18dp"
-        android:text="隐私条款" />
+        android:text="用户协议与隐私条款" />
     <TextView
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
@@ -23,49 +23,13 @@
         android:maxLines="12"
         android:scrollbars="vertical"
         android:layout_marginTop="36dp"
-        android:text="隐私条款\n\n
-亲密共享号重视用户的隐私。您在使用我们的产品（包含服务）时，我们可能会收集并使用您的相关信息用以提高服务质量，我们会在商业上合理的范围内尽一切可能保护您的隐私。我们建议您阅读该《隐私条款》以详细了解我们收集何种信息，如何收集信息以及如何处理或使用这些信息。当您使用我们的产品或服务时，您同意我们在遵循该策略及当地法律的前提下收集，存储并使用您的信息。\n
-该《隐私条款》中将涉及到一些专业性的术语，我们会用尽可能简洁的方式向您解释，以便您理解。\n
-信息的收集与使用\n
-我们收集并存储某些您的个人信息用于创建短信验证码代收帐户，并为后续服务提供必要的支持。如果您不想我们提供这些信息，可能无法注册或无法享受我们提供的某些服务，或者部分功能无法达到最佳体验。未注册用户也可以使用部分功能，我们不会收集未注册用户的个人信息。\n
-\n
-我们获取的个人信息包括：\n
-\n
-（1）您在注册账户或使用我们的服务时填写的姓名，电话号码以及上传的头像图片。\n
-\n
-我们获取的其他信息包括：\n
-\n
-（1）您在与服务交互时所使用的授权短信获取服务，这些信息可以帮助我们更加了解您以便优化服务使您获得更好的体验。\n
-\n
-公开的信息\n
-\n
-当您使用短信验证码代收的产品或服务时，我们默认您已经允许并同意该条款。因此，我们不会在除以下任何情况之外与任何第三方分享您的信息，亦不会出售或出租或以其他方式分发给其他人。\n
-\n
-（1）我们获得您明确同意我们分享信息。\n
-\n
-（2）为了维护我们或合作伙伴，客户的合法权益，我们会完全保密您的个人信息。\n
-\n
-（4）为了遵守当地法律法规，维护社会公共利益或其它法律上用于维护他人权益的必要理由，我们会在法律框架内谨慎的公布您的个人信息。\n
-\n
-（5）当我们发生合并，收购或其它同类交易时，您的个人信息可能作为交易的资源。若发生此类情况，我们会提前告知您转移或销毁您的个人信息。\n
-\n
-数据安全\n
-\n
-我们使用多种行业标准的加密技术（如SSL,TLS）来保护您在传输，存储，分享过程中的数据。但请您理解，由于互联网技术的限制，即使使用所有先进的安全技术也无法保证信息100%的安全，因此，我们需要您了解并确认传输信息给我们的所存在的风险。\n
-\n
-当您的数据存储至我们的服务器，我们将通过政策，物理，逻辑等多种方式确保数据在我们服务器上的安全。而在您电脑上的数据更多依赖于您设备的安全，我们建议您采取必要的措施保证您本地数据的安全。\n
-\n
-\n
-\n
-条款更新\n
-\n
-当您继续使用我们的产品或服务，即默认为同意当下时间有效的条款。"
+        android:text="@string/new_privacy"
         android:textSize="16dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <Button
@@ -84,7 +48,7 @@
             android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:background="@drawable/selector_button"
-            android:text="确定" />
+            android:background="@drawable/selector_button_48"
+            android:text="同意并继续" />
     </LinearLayout>
 </LinearLayout>

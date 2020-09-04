@@ -7,12 +7,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff2d5"
+        android:padding="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="@string/tv_content"/>
+
+        <Button
+            android:id="@+id/btn_invite"
+            android:layout_width="130dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selector_invite"
+            android:layout_height="48dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <EditText
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:textSize="14dp"
-        android:hint="@string/relationOrName" />
+        android:hint="@string/relationOrName"
+        android:textSize="14dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,9 +46,10 @@
             android:id="@+id/et_guanlian"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14dp"
             android:layout_alignParentTop="true"
-            android:hint="@string/phoneNumber" />
+            android:hint="@string/phoneNumber"
+            android:textSize="14dp" />
+
         <Button
             android:id="@+id/btn_guanlian"
             android:layout_width="80dp"
@@ -38,7 +63,7 @@
 
     <ListView
         android:id="@+id/list"
-        android:divider="@null"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:divider="@null" />
 </LinearLayout>

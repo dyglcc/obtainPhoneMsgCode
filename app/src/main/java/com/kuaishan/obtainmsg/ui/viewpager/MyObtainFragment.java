@@ -34,11 +34,6 @@ public class MyObtainFragment extends LazyFragment {
     private TextView textView;
     private ProgressBar progressBar;
 
-//    @Override
-//    protected View getPreviewLayout(LayoutInflater inflater, ViewGroup container) {
-//        return inflater.inflate(R.layout.layout_myshare, container, false);
-//    }
-
     private ListView listView;
     private UserObtainAdapter obtainAdapter;
 
@@ -48,9 +43,7 @@ public class MyObtainFragment extends LazyFragment {
         setContentView(R.layout.layout_myshare);
         tabName = getArguments().getString(INTENT_STRING_TABNAME);
         position = getArguments().getInt(INTENT_INT_POSITION);
-//        textView = (TextView) findViewById(R.id.fragment_mainTab_item_textView);
-//        textView.setText(tabName + " " + position + " 界面加载完毕");
-        progressBar = (ProgressBar) findViewById(R.id.fragment_mainTab_item_progressBar);
+        progressBar = findViewById(R.id.fragment_mainTab_item_progressBar);
         listView = findViewById(R.id.list);
         obtainAdapter = new UserObtainAdapter(null, getActivity());
         listView.setAdapter(obtainAdapter);
@@ -74,15 +67,20 @@ public class MyObtainFragment extends LazyFragment {
             AdhocExecutorService.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
+                    if (getActivity() == null) {
+                        return;
+                    }
                     final String str = NetWorkUtils.sendMessge(Constants.Url.FINDSUBACCOUNT, map);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    });
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                     if (!TextUtils.isEmpty(str)) {
-                        if (str.contains("ok")) {
+                        if (str.contains("ok") && getActivity() != null && !getActivity().isFinishing()) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

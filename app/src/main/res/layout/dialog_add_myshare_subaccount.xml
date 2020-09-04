@@ -43,7 +43,7 @@
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:background="@drawable/selector_button"
+            android:background="@drawable/selector_button_48"
             android:text="@string/add_sub_account" />
     </LinearLayout>
 </LinearLayout>

@@ -21,6 +21,16 @@ public class Relation {
 
     private String name;
 
+    public String getMain_account_name() {
+        return main_account_name;
+    }
+
+    public void setMain_account_name(String main_account_name) {
+        this.main_account_name = main_account_name;
+    }
+
+    private String main_account_name;
+
 
     public String getMain_account() {
         return main_account;

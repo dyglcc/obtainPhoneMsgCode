@@ -19,6 +19,7 @@ import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
+import com.kuaishan.obtainmsg.core.SoftKeyboardUtil;
 import com.kuaishan.obtainmsg.core.T;
 import com.kuaishan.obtainmsg.core.Utils;
 
@@ -70,7 +71,8 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.btn_add_myshare_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
+                // test
+//                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
             }
         });
         String phone = Utils.getPhone(this);
@@ -80,6 +82,7 @@ public class LoginActivity extends BaseActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SoftKeyboardUtil.hideSoftKeyboard(LoginActivity.this);
                 login();
             }
         });
@@ -103,7 +106,7 @@ public class LoginActivity extends BaseActivity {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(getisFirstOpen(LoginActivity.this)){
+                if(isFirstOpen(LoginActivity.this)){
                     Utils.showPrivicyDialog(LoginActivity.this,true);
                 }
             }
@@ -166,7 +169,7 @@ public class LoginActivity extends BaseActivity {
     public static long getTimeToken(Context context) {
         return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getLong(Constants.COMMON.TIME_TOKEN, 0);
     }
-    public static boolean getisFirstOpen(Context context) {
+    public static boolean isFirstOpen(Context context) {
         return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getBoolean(Constants.COMMON.FIRST_OPEN, true);
     }
 
@@ -174,7 +177,7 @@ public class LoginActivity extends BaseActivity {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(Constants.COMMON.FIRST_OPEN,true);
+        editor.putBoolean(Constants.COMMON.FIRST_OPEN,false);
         editor.apply();
     }
     private void saveTimeToken() {

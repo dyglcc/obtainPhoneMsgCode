@@ -51,8 +51,9 @@ public class DashboardFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.logOut(getActivity());
-                getActivity().finish();
+                Utils.showLogoutDialog(getActivity());
+//                LoginActivity.logOut(getActivity());
+//                getActivity().finish();
             }
         });
         about = root.findViewById(R.id.btn_about);
@@ -73,7 +74,7 @@ public class DashboardFragment extends Fragment {
         contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.toast(getActivity(), "联系我们");
+//                Utils.toast(getActivity(), "联系我们");
                 FeedbackAPI.openFeedbackActivity();
             }
         });

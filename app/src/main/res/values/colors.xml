@@ -18,6 +18,7 @@
     <color name="icon_grey">#FF959AA4</color>
     <color name="activity_background">#f4f7f9</color>
     <color name="obtain_blue">#ff2562f5</color>
+    <color name="regist_red">#ffff0000</color>
     <color name="obtain_blue_pressed">#353B70</color>
     <color name="invite_pressed">#22f5f7f9</color>
     <color name="invite_normal">#fff5f7f9</color>

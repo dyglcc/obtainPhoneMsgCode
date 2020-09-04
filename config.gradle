@@ -25,7 +25,7 @@ project.ext {
             server   : "\"https://www.kuaishanapp.net:9000/\"",
             track    : "\"https://tracker.appadhoc.com/\"",
             websocket: "\"https://socket.appadhoc.com/\"",
-            qi_niu   : "\"https://cdn-api.appadhoc.com/\""
+            qi_niu   : "\"https://cdn-api.appadhoc.com/\"",
 //server   : "\"http://192.168.1.2:9000/\"",
 //track    : "\"http://tracker.dev.com/\"",
 //websocket: "\"http://socket.appadhoc.com/\"",

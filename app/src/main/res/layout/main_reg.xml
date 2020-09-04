@@ -22,6 +22,8 @@
         <EditText
             android:id="@+id/et_name"
             android:layout_height="60dp"
+            android:visibility="gone"
+            android:text="default"
             android:textSize="14dp"
             android:layout_width="match_parent"
             android:hint="@string/giveMyselfName">
@@ -42,13 +44,14 @@
 
             android:layout_height="60dp"
             android:textSize="14dp"/>
+
         <Button
             android:id="@+id/btn_reg"
-            android:layout_height="60dp"
-            android:background="@drawable/selector_button"
-            android:textSize="20dp"
-            android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:text="@string/regString"/>
+            android:layout_height="48dp"
+            android:background="@drawable/selector_button_48"
+            android:text="@string/regString"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
     </LinearLayout>
 </LinearLayout>

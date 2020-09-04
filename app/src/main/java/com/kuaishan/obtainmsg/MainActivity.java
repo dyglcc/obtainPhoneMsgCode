@@ -39,14 +39,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long timeToke = LoginActivity.getTimeToken(this);
-        if ((System.currentTimeMillis() - timeToke) >= Constants.COMMON.TENDAYS) {
+        long timeToken = LoginActivity.getTimeToken(this);
+        if ((System.currentTimeMillis() - timeToken) >= Constants.COMMON.TENDAYS) {
             goLoginActivity();
             finish();
             return;
         }
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setItemIconTintList(null);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -155,14 +156,14 @@ public class MainActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(extras)) {
                         showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
                     }
-                    setCostomMsg(showMsg.toString());
+                    setCustomMsg(showMsg.toString());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        private void setCostomMsg(String toString) {
+        private void setCustomMsg(String toString) {
             if (MainActivity.isForeground) {
                 if (context != null && context.get() != null) {
                     Dialog dialog =

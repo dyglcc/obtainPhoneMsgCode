@@ -105,6 +105,16 @@ public class RelationCreateActivity extends BaseActivity {
             actionBar.setTitle("添加帐号");
         }
 
+
+        findViewById(R.id.btn_invite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.clipShare(RelationCreateActivity.this);
+                Utils.toast(RelationCreateActivity.this, "链接已经复制");
+            }
+        });
+
+
     }
     private void requestDeleteSubAccount(Relation relation) {
         final HashMap map = new HashMap();

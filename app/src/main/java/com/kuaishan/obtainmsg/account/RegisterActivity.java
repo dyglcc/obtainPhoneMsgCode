@@ -1,6 +1,5 @@
 package com.kuaishan.obtainmsg.account;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
@@ -20,8 +20,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends BaseActivity {
 
     private Button buttonReg;
     private EditText pass1, pass2, et_phone, et_name;
@@ -45,6 +46,13 @@ public class RegisterActivity extends Activity {
                 reg();
             }
         });
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("注册");
+        }
 
     }
     private void reg() {

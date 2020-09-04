@@ -65,7 +65,7 @@ public class HomeFragment extends LazyFragment {
         ViewPager viewPager = (ViewPager) findViewById(R.id.fragment_tabmain_viewPager);
         Indicator indicator = (Indicator) findViewById(R.id.fragment_tabmain_indicator);
 
-        int color  = getResources().getColor(R.color.colorPrimary);
+        int color  = getResources().getColor(R.color.obtain_blue);
         switch (index) {
             case 0:
                 indicator.setScrollBar(new ColorBar(getApplicationContext(),color

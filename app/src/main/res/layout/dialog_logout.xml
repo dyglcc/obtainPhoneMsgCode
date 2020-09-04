@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_background_reg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:text="退出登录" />
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:maxLines="12"
+        android:scrollbars="vertical"
+        android:layout_marginTop="36dp"
+        android:text="@string/areyousurequit"
+        android:textSize="16dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDisagree"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_48"
+            android:text="算了" />
+        <Button
+            android:id="@+id/tv_add"
+            android:layout_width="0px"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_48"
+            android:text="退出帐号" />
+    </LinearLayout>
+</LinearLayout>

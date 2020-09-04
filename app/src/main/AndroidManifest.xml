@@ -60,6 +60,7 @@
         <activity android:name=".ui.activity.ShareAppSettingActivity"></activity>
         <activity android:name=".ui.activity.GonglvActivity"></activity>
         <activity android:name=".test.MainActivity"/>
+        <activity android:name=".privacyWebActivity.PrivacyActivity"/>
 
         <activity
             android:name=".live.LiveActivity"

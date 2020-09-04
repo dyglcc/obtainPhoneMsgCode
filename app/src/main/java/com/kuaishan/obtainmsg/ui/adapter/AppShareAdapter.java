@@ -75,10 +75,11 @@ public class AppShareAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 boolean clickstatus = holder.switchCompat.isChecked();
-                requestNetAddGroup(context,clickstatus,app);
+                requestNetAddGroup(context, clickstatus, app);
             }
         });
-//        holder.switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+//        holder.switchCompat.setOnCheckedChangeListener(new CompoundButton
+//        .OnCheckedChangeListener(){
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //
@@ -87,12 +88,13 @@ public class AppShareAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void requestNetAddGroup(final Activity context, boolean add,AppShares app) {
+    private void requestNetAddGroup(final Activity context, boolean add, AppShares app) {
         final HashMap map = new HashMap();
         map.put("main_account", Utils.getPhone(context));
-        map.put("app_id",app.getId()+"");
-        if(app.getGroup_id()!=0){
-            map.put("group_id",app.getGroup_id()+"");
+        map.put("app_id", app.getId() + "");
+        if (app.getGroup_id() != 0) {
+            map.put("group_id", app.getGroup_id() + "");
+            map.put("add", add + "");
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             AdhocExecutorService.getInstance().execute(new Runnable() {
@@ -104,13 +106,14 @@ public class AppShareAdapter extends BaseAdapter {
                             context.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Utils.toast(context, "授权app成功");
+                                    Utils.toast(context, "授权操作成功");
                                     try {
 //                                        JSONObject jsonObject = new JSONObject(str);
 //                                        JSONObject dataObj = jsonObject.optJSONObject("data");
 //                                        Gson gson = new Gson();
 //                                        List datas =
-//                                                gson.fromJson(dataObj.optJSONArray("data").toString(),
+//                                                gson.fromJson(dataObj.optJSONArray("data")
+//                                                .toString(),
 //                                                        new TypeToken<List<Relation>>() {
 //                                                        }.getType());
                                         // need gson;
@@ -126,6 +129,7 @@ public class AppShareAdapter extends BaseAdapter {
             });
         }
     }
+
     private static class ViewHolder {
         private TextView tv_app_name;
         private ImageView iv_icon;

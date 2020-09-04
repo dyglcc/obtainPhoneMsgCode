@@ -11,8 +11,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -283,6 +287,22 @@ public class Utils {
                 null);
         dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
+        final TextView textView  = view.findViewById(R.id.tv_count);
+
+        //设置Hello World前三个字符有点击事件
+        SpannableStringBuilder textSpanned4 = new SpannableStringBuilder(get);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,textView.getText() , Toast.LENGTH_SHORT).show();
+            }
+        };
+        textSpanned4.setSpan(clickableSpan,
+                0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//注意：此时必须加这一句，不然点击事件不会生效
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(textSpanned4);
+todosdfasdf
         dialog.show();
         Button btnInvite = view.findViewById(R.id.tv_add);
         dialog.setCanceledOnTouchOutside(false);
@@ -305,6 +325,40 @@ public class Utils {
             public void onClick(View v) {
                 dialog.dismiss();
                 LoginActivity.saveFirstOpenApp(context);
+            }
+        });
+    }
+    /**
+     * loading dialog
+     */
+    public static void showLogoutDialog(final Activity context) {
+        if (context == null) {
+            return;
+        }
+        final Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_logout,
+                null);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Button btnInvite = view.findViewById(R.id.tv_add);
+        dialog.setCanceledOnTouchOutside(false);
+        TextView tvCount = view.findViewById(R.id.tv_count);
+        tvCount.setMovementMethod(new ScrollingMovementMethod());
+        final Button btnDisagree = view.findViewById(R.id.btnDisagree);
+        btnDisagree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+//                context.finish();
+            }
+        });
+        btnInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                LoginActivity.logOut(context);
+                context.finish();
             }
         });
     }

@@ -20,6 +20,7 @@ import com.kuaishan.obtainmsg.core.AdhocExecutorService;
 import com.kuaishan.obtainmsg.core.Constants;
 import com.kuaishan.obtainmsg.core.NetWorkUtils;
 import com.kuaishan.obtainmsg.core.Utils;
+import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.kuaishan.obtainmsg.ui.activity.ShareAppSettingActivity;
 import com.kuaishan.obtainmsg.ui.adapter.UserAppAdapter;
 import com.kuaishan.obtainmsg.ui.bean.UserApp;
@@ -87,51 +88,62 @@ public class MyShareFragment extends LazyFragment {
             });
         }
     }
+
     @Override
     protected void onFragmentStartLazy() {
         super.onFragmentStartLazy();
         Log.d("cccc", "Fragment 显示 " + this);
     }
+
     @Override
     protected View getPreviewLayout(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.layout_myshare, container, false);
     }
+
     private void refreshData(List datas) {
         appAdapter.setData(datas);
-        if(listView.getFooterViewsCount()==0){
-            View footer = LayoutInflater.from(getActivity()).inflate(R.layout.footer_user_app,null);
+        if (listView.getFooterViewsCount() == 0) {
+            View footer = LayoutInflater.from(getActivity()).inflate(R.layout.footer_user_app,
+                    null);
             footer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivityForResult(new Intent(getActivity(), ShareAppSettingActivity.class),100);
+                    startActivityForResult(new Intent(getActivity(),
+                            ShareAppSettingActivity.class), 100);
                 }
             });
             listView.addFooterView(footer);
         }
     }
+
     private ListView listView;
     private UserAppAdapter appAdapter;
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
+        if (getActivity() == null || getActivity().isFinishing()) {
+            return;
+        }
         tabName = getArguments().getString(INTENT_STRING_TABNAME);
         position = getArguments().getInt(INTENT_INT_POSITION);
         progressBar = findViewById(R.id.fragment_mainTab_item_progressBar);
         listView = findViewById(R.id.list);
         appAdapter = new UserAppAdapter(null, getActivity());
-        listView.setAdapter(appAdapter);
+        if (listView != null) {
+            listView.setAdapter(appAdapter);
+        }
         requestMySharedApps();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Adapter adapter = parent.getAdapter();
                 UserApp userApp = (UserApp) adapter.getItem(position);
-                Utils.btn_add_myshare_dialog(getActivity(),userApp.getApp().getId(),101);
-//                Intent intent = new Intent(getActivity(),
-//                        RelationCreateActivity.class);
-//                intent.putExtra("group_id", userApp.getApp().getId());
-//                startActivityForResult(intent, 101);
+//                Utils.btn_add_myshare_dialog(getActivity(),userApp.getApp().getId(),101);
+                Intent intent = new Intent(getActivity(),
+                        RelationCreateActivity.class);
+                intent.putExtra("group_id", userApp.getApp().getId());
+                startActivityForResult(intent, 101);
             }
         });
     }
@@ -140,12 +152,13 @@ public class MyShareFragment extends LazyFragment {
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode ==100){
+        if (requestCode == 100) {
             requestMySharedApps();
-        }else if(requestCode == 101){
+        } else if (requestCode == 101) {
             requestMySharedApps();
         }
     }
