@@ -290,11 +290,11 @@ public class Utils {
         final TextView textView  = view.findViewById(R.id.tv_count);
 
         //设置Hello World前三个字符有点击事件
-        SpannableStringBuilder textSpanned4 = new SpannableStringBuilder(get);
+        SpannableStringBuilder textSpanned4 = new SpannableStringBuilder(context.getString(R.string.new_privacy));
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,textView.getText() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"hello" , Toast.LENGTH_SHORT).show();
             }
         };
         textSpanned4.setSpan(clickableSpan,
@@ -302,12 +302,12 @@ public class Utils {
 //注意：此时必须加这一句，不然点击事件不会生效
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setText(textSpanned4);
-todosdfasdf
+
         dialog.show();
         Button btnInvite = view.findViewById(R.id.tv_add);
         dialog.setCanceledOnTouchOutside(false);
-        TextView tvCount = view.findViewById(R.id.tv_count);
-        tvCount.setMovementMethod(new ScrollingMovementMethod());
+//        TextView tvCount = view.findViewById(R.id.tv_count);
+//        tvCount.setMovementMethod(new ScrollingMovementMethod());
         final Button btnDisagree = view.findViewById(R.id.btnDisagree);
         if(!firstOpenApp){
             btnDisagree.setVisibility(View.GONE);

@@ -25,30 +25,31 @@
         android:layout_marginTop="36dp"
         android:text="@string/new_privacy"
         android:textSize="16dp" />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
         <Button
             android:id="@+id/btnDisagree"
-            android:layout_width="0px"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:textColor="@color/white"
-            android:background="@drawable/selector_button"
+            android:background="@drawable/selector_button_48"
             android:text="不同意" />
         <Button
             android:id="@+id/tv_add"
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
             android:textColor="@color/white"
-            android:layout_weight="1"
             android:background="@drawable/selector_button_48"
             android:text="同意并继续" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

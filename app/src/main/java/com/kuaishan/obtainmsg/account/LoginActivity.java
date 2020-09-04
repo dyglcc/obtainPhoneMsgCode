@@ -8,10 +8,16 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.MainActivity;
@@ -68,6 +74,20 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+//        final TextView tv = findViewById(R.id.tv_hello);
+//        SpannableStringBuilder textSpanned4 = new SpannableStringBuilder("hello");
+//        ClickableSpan clickableSpan = new ClickableSpan() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(LoginActivity.this,tv.getText() , Toast.LENGTH_SHORT).show();
+//            }
+//        };
+//        textSpanned4.setSpan(clickableSpan,
+//                0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+////注意：此时必须加这一句，不然点击事件不会生效
+//        tv.setMovementMethod(LinkMovementMethod.getInstance());
+//        tv.setText(textSpanned4);
+
         findViewById(R.id.btn_add_myshare_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,9 +126,9 @@ public class LoginActivity extends BaseActivity {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(isFirstOpen(LoginActivity.this)){
+//                if(isFirstOpen(LoginActivity.this)){
                     Utils.showPrivicyDialog(LoginActivity.this,true);
-                }
+//                }
             }
         },1000);
     }
