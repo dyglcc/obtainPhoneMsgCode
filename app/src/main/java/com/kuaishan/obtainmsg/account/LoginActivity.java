@@ -8,16 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.MainActivity;
@@ -126,9 +120,9 @@ public class LoginActivity extends BaseActivity {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-//                if(isFirstOpen(LoginActivity.this)){
+                if(isFirstOpen(LoginActivity.this)){
                     Utils.showPrivicyDialog(LoginActivity.this,true);
-//                }
+                }
             }
         },1000);
     }

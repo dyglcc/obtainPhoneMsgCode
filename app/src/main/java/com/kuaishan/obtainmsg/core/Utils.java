@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
@@ -31,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.kuaishan.obtainmsg.R;
 import com.kuaishan.obtainmsg.RuntimeRationale;
 import com.kuaishan.obtainmsg.account.LoginActivity;
+import com.kuaishan.obtainmsg.privacyWebActivity.PrivacyActivity;
 import com.kuaishan.obtainmsg.ui.activity.RelationCreateActivity;
 import com.kuaishan.obtainmsg.ui.bean.SubTicket;
 import com.mob.MobSDK;
@@ -291,14 +293,26 @@ public class Utils {
 
         //设置Hello World前三个字符有点击事件
         SpannableStringBuilder textSpanned4 = new SpannableStringBuilder(context.getString(R.string.new_privacy));
-        ClickableSpan clickableSpan = new ClickableSpan() {
+        ClickableSpan clickableSpan = new NoLineClickSpan() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"hello" , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, PrivacyActivity.class);
+                intent.putExtra("type",PrivacyActivity.yonghuxieyi);
+                context.startActivity(intent);
+            }
+        };
+        ClickableSpan clickableSpan1 = new NoLineClickSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PrivacyActivity.class);
+                intent.putExtra("type",PrivacyActivity.yinsitiaokuan);
+                context.startActivity(intent);
             }
         };
         textSpanned4.setSpan(clickableSpan,
-                0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                66, 77, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textSpanned4.setSpan(clickableSpan1,
+                78, 89, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 //注意：此时必须加这一句，不然点击事件不会生效
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setText(textSpanned4);
@@ -441,5 +455,12 @@ public class Utils {
         editor.putString("mobile", mobile);
         editor.apply();
     }
+    private static abstract class NoLineClickSpan extends ClickableSpan {
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setColor(ds.linkColor);
+            ds.setUnderlineText(false); //去掉下划线
+        }
 
+    }
 }
