@@ -70,9 +70,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test dialog"
-        android:visibility="gone"
-        android:id="@+id/btn_dialog_ok"/>
+        android:text="test java sdk"
+        android:id="@+id/testjavasdk"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click track.."
+        android:id="@+id/testjavasdkTrack"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开关的开关状态：开启"
+        android:id="@+id/kaiguandekaiguan"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -36,4 +36,20 @@ public class NetWorkUtils {
         }
         return null;
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String  sendMessge(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .build();
+            try (Response response = client.newCall(request).execute()) {
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

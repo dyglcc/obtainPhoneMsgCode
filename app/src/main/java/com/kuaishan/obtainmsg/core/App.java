@@ -2,6 +2,7 @@ package com.kuaishan.obtainmsg.core;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,10 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.adhoc.adhocsdk.AdhocConfig;
+import com.adhoc.adhocsdk.AdhocTracker;
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
+import com.kuaishan.obtainmsg.account.LoginActivity;
 import com.taobao.sophix.SophixManager;
 
 import java.lang.reflect.Constructor;
@@ -32,10 +36,22 @@ public class App extends Application {
 
         FeedbackAPI.init(this, "29503991", "d2bd9072761af86f3783032f26bb4da9");
         SophixManager.getInstance().queryAndLoadNewPatch();
+//        ADHOC_6ea75f1a-e4f6-4caf-b98b-93dcec08836a
+        SharedPreferences sharedPreferences = getSharedPreferences("kaiguandekaiguan", 0);
+        boolean value = sharedPreferences.getBoolean("kaiguan", true);
+
+        AdhocConfig config = AdhocConfig.defaultConfig()
+                .appKey("ADHOC_6ea75f1a-e4f6-4caf-b98b-93dcec08836a")
+                .reportImmediately()
+                .supportBackend(true)
+                .supportMultiProcess();
+        config.supportBackend(value);
+        AdhocTracker.init(this, config);
+
         closeAndroidPDialog();
     }
 
-    private void closeAndroidPDialog(){
+    private void closeAndroidPDialog() {
         try {
             Class aClass = Class.forName("android.content.pm.PackageParser$Package");
             Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
@@ -55,6 +71,7 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+
     public static class MsgHandler extends Handler {
         private Context context;
 

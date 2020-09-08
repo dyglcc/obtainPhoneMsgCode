@@ -9,10 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.adhoc.adhocsdk.AdhocTracker;
 import com.kuaishan.obtainmsg.BaseActivity;
 import com.kuaishan.obtainmsg.MainActivity;
 import com.kuaishan.obtainmsg.R;
@@ -26,11 +29,16 @@ import com.kuaishan.obtainmsg.core.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Set;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cn.smssdk.EventHandler;
@@ -60,14 +68,14 @@ public class LoginActivity extends BaseActivity {
             goMain();
             return;
         }
-        findViewById(R.id.btn_dialog_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,
-                        com.kuaishan.obtainmsg.test.MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.btn_dialog_ok).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this,
+//                        com.kuaishan.obtainmsg.test.MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 //        final TextView tv = findViewById(R.id.tv_hello);
 //        SpannableStringBuilder textSpanned4 = new SpannableStringBuilder("hello");
 //        ClickableSpan clickableSpan = new ClickableSpan() {
@@ -87,6 +95,44 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 // test
 //                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
+            }
+        });
+        findViewById(R.id.testjavasdk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // test
+//                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
+//                todo requestGetList
+
+                requestList();
+                String ip = getDeviceIps();
+//                172.23.2.245
+
+            }
+        });
+        findViewById(R.id.testjavasdkTrack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // test
+//                Utils.btn_add_myshare_dialog(LoginActivity.this, 1, 101);
+//                todo track click
+                AdhocTracker.track("itemclick", 1);
+                System.out.println("asd");
+            }
+        });
+        final Button button = findViewById(R.id.kaiguandekaiguan);
+        SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("kaiguandekaiguan", 0);
+        boolean value = sharedPreferences.getBoolean("kaiguan", true);
+        button.setText(".开关的开关状态是：" + (value ? "开启" : "关闭"));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences("kaiguandekaiguan", 0);
+                boolean value = sharedPreferences.getBoolean("kaiguan", true);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("kaiguan", !value);
+                editor.commit();
+                button.setText(".开关的开关状态是：" + (!value ? "开启" : "关闭"));
             }
         });
         String phone = Utils.getPhone(this);
@@ -120,11 +166,51 @@ public class LoginActivity extends BaseActivity {
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(isFirstOpen(LoginActivity.this)){
-                    Utils.showPrivicyDialog(LoginActivity.this,true);
+                if (isFirstOpen(LoginActivity.this)) {
+                    Utils.showPrivicyDialog(LoginActivity.this, true);
                 }
             }
-        },1000);
+        }, 1000);
+    }
+
+    private void requestList() {
+        showLoadingDialog("发送数据中..");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            AdhocExecutorService.getInstance().execute(new Runnable() {
+                @Override
+                public void run() {
+                    final String str = NetWorkUtils.sendMessge(Constants.Url.testjavasdk + "?clientid=" + AdhocTracker.getClientId());
+                    dismiss();
+                    if (!TextUtils.isEmpty(str)) {
+                        if (str.contains("ok")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TextView tv = findViewById(R.id.testjavasdk);
+                                    tv.setText(str);
+                                    try {
+                                        JSONObject object = new JSONObject(str);
+                                        AdhocTracker.setExperiments(object.optJSONArray("exps").toString());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+                        } else {
+                            try {
+                                JSONObject object = new JSONObject(str);
+                                String msg = object.optString("message");
+                                Utils.toast(LoginActivity.this, "貌似有问题出现:" + msg);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void login() {
@@ -183,6 +269,7 @@ public class LoginActivity extends BaseActivity {
     public static long getTimeToken(Context context) {
         return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getLong(Constants.COMMON.TIME_TOKEN, 0);
     }
+
     public static boolean isFirstOpen(Context context) {
         return context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0).getBoolean(Constants.COMMON.FIRST_OPEN, true);
     }
@@ -191,9 +278,10 @@ public class LoginActivity extends BaseActivity {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(Constants.COMMON.FIRST_OPEN,false);
+        editor.putBoolean(Constants.COMMON.FIRST_OPEN, false);
         editor.apply();
     }
+
     private void saveTimeToken() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.COMMON.SHARE_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -322,4 +410,31 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };// 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。
+
+
+    public static String getDeviceIps() {
+        String hostIp = "unknksdf";
+        try {
+            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            InetAddress ia = null;
+            while (nis.hasMoreElements()) {
+                NetworkInterface ni = nis.nextElement();
+                Enumeration<InetAddress> ias = ni.getInetAddresses();
+                while (ias.hasMoreElements()) {
+                    ia = ias.nextElement();
+                    if (ia instanceof Inet6Address) {
+                        continue;// skip ipv6
+                    }
+                    String ip = ia.getHostAddress();
+                    if (!"127.0.0.1".equals(ip)) {
+                        hostIp = ia.getHostAddress();
+                        break;
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            // e.printStackTrace();
+        }
+        return hostIp;
+    }
 }

@@ -139,7 +139,7 @@ dependencies {
     //    implementation files('libs/alicloud-android-utdid-1.1.5.3.jar')
     //    implementation files('libs/alicloud-android-ut-5.4.3.jar')
     //    implementation files('libs/alicloud-android-sdk-beacon-1.0.3.jar')
-    //    implementation(name :'alicloud-android-feedback-3.3.1',ext:'aar')
+        implementation(name :'abtest-5.3.1',ext:'aar')
     //    implementation(name :'alicloud-android-hotfix-3.2.14',ext:'aar')
     // 阿里的热修复和用户反馈
 //    implementation files('libs/alicloud-android-sdk-beacon-1.0.3.jar')

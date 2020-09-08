@@ -21,6 +21,7 @@ public class Constants {
         public static final String G_SINGLE_MSG = BuildConfig.FlagServer + "api/v1" +
                 "/getSingleMessage";
         public static final String LOGIN = BuildConfig.FlagServer + "api/v1/login";
+        public static final String testjavasdk = BuildConfig.FlagServer + "api/v1/getlist";
         public static final String FORGOT_PASS = BuildConfig.FlagServer + "api/v1/forgotPass";
         public static final String ADDRELATION = BuildConfig.FlagServer + "api/v1/addRelation";
         public static final String GETRELATION = BuildConfig.FlagServer + "api/v1/relations";
